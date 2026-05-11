@@ -1,6 +1,8 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
+import useEmblaCarousel from "embla-carousel-react";
+import { motion, useReducedMotion } from "framer-motion";
 import { content, type Lang } from "@/lib/content";
 
 /* ─────────────────────────────────────────────────────────────────────────
@@ -250,6 +252,14 @@ function Glyph({ kind }: { kind: string }) {
         <path d="M30 30 L18 50" opacity=".5" />
       </svg>
     ),
+    startup: (
+      <svg {...props}>
+        <path d="M32 6 C42 16 44 30 44 40 L20 40 C20 30 22 16 32 6 Z" />
+        <circle cx="32" cy="23" r="4" />
+        <path d="M20 40 L12 52 L20 47 M44 40 L52 52 L44 47" />
+        <path d="M28 47 L28 56 M36 47 L36 56" opacity=".5" />
+      </svg>
+    ),
     lang: (
       <svg {...props}>
         <text x="6" y="28" fontSize="18" fill="currentColor" stroke="none" fontFamily="Outfit, sans-serif" fontWeight="600">
@@ -267,32 +277,52 @@ function Glyph({ kind }: { kind: string }) {
   return map[kind] || map.core;
 }
 
-/* ─── Executive Portrait Card ─── */
-function ExecutivePortrait({ lang }: { lang: Lang }) {
-  const meta = {
-    en: { role: "C-Level Strategy & AI Transformation Advisor", years: "25+ years", loc: "Israel · International", langs: "AR · EN · HE · IT" },
-    ar: { role: "مستشار استراتيجية تنفيذية وتحوّل بالذكاء الاصطناعي", years: "+25 سنة", loc: "إسرائيل · دولي", langs: "AR · EN · HE · IT" },
-    he: { role: "יועץ אסטרטגיה ברמת C ותמורת AI", years: "+25 שנים", loc: "ישראל · בינלאומי", langs: "AR · EN · HE · IT" },
+/* ─── Hero Identity Panel — executive signature module ─── */
+function HeroIdentityPanel({ lang }: { lang: Lang }) {
+  const m = {
+    en: {
+      eyebrow: "Executive Profile",
+      title: "C-Level Strategy & AI Transformation Advisor",
+      meta: ["25+ years", "Israel", "International"],
+      langs: ["AR", "EN", "HE", "IT"],
+    },
+    ar: {
+      eyebrow: "الملف التنفيذي",
+      title: "مستشار استراتيجية تنفيذية وتحوّل بالذكاء الاصطناعي",
+      meta: ["+25 سنة", "إسرائيل", "دولي"],
+      langs: ["AR", "EN", "HE", "IT"],
+    },
+    he: {
+      eyebrow: "פרופיל מנהלים",
+      title: "יועץ אסטרטגיה והובלת טרנספורמציה בבינה מלאכותית ברמת הנהלה",
+      meta: ["+25 שנים", "ישראל", "בינלאומי"],
+      langs: ["AR", "EN", "HE", "IT"],
+    },
   }[lang];
   return (
-    <div className="portrait-card">
-      <div className="portrait-card__rim" aria-hidden="true" />
-      <div className="portrait-card__shot">
+    <div className="hero-identity">
+      <div className="hero-identity__rim" aria-hidden="true" />
+      <div className="hero-identity__photo">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/assets/antonio-portrait.png" alt="Antonio Rawad Nassar — C-Level Strategy & AI Transformation Advisor" loading="eager" />
-        <div className="portrait-card__vignette" aria-hidden="true" />
-        <div className="portrait-card__edge portrait-card__edge--cyan" aria-hidden="true" />
-        <div className="portrait-card__edge portrait-card__edge--warm" aria-hidden="true" />
+        <div className="hero-identity__photo-grad" aria-hidden="true" />
+        <div className="hero-identity__photo-edge hero-identity__photo-edge--cyan" aria-hidden="true" />
+        <div className="hero-identity__photo-edge hero-identity__photo-edge--warm" aria-hidden="true" />
       </div>
-      <div className="portrait-card__id">
-        <div className="portrait-card__name">Antonio Rawad Nassar</div>
-        <div className="portrait-card__role">{meta.role}</div>
-        <div className="portrait-card__meta">
-          <span>{meta.years}</span>
-          <span className="portrait-card__sep" aria-hidden="true" />
-          <span>{meta.loc}</span>
-          <span className="portrait-card__sep" aria-hidden="true" />
-          <span className="mono">{meta.langs}</span>
+      <div className="hero-identity__body">
+        <span className="hero-identity__eyebrow">{m.eyebrow}</span>
+        <p className="hero-identity__name display-face">Antonio Rawad Nassar</p>
+        <p className="hero-identity__title">{m.title}</p>
+        <div className="hero-identity__divider" aria-hidden="true" />
+        <div className="hero-identity__meta">
+          {m.meta.map((x, i) => (
+            <span key={i}>{x}</span>
+          ))}
+        </div>
+        <div className="hero-identity__langs" aria-label="Languages: Arabic, English, Hebrew, Italian">
+          {m.langs.map((x, i) => (
+            <b key={i}>{x}</b>
+          ))}
         </div>
       </div>
     </div>
@@ -618,7 +648,7 @@ function Hero({ lang }: { lang: Lang }) {
           </div>
         </div>
         <div className="hero__visual">
-          <ExecutivePortrait lang={lang} />
+          <HeroIdentityPanel lang={lang} />
           <ClarityEngine t={t} lang={lang} />
         </div>
       </div>
@@ -796,34 +826,171 @@ function Projects({ lang }: { lang: Lang }) {
         ))}
       </div>
 
-      <div className="proj-rail-wrap">
-        <div className="proj-rail" role="list">
-          {rest.map((p, i) => (
-            <Reveal key={p.i} delay={i * 80} as="article" className="proj-card">
-              <TiltCard className="proj-card__tilt" intensity={6}>
-                <div className="proj-card__head">
-                  <span className="proj-card__idx mono">{p.i}</span>
-                  <h3 className="proj-card__name display-face">{p.name}</h3>
-                  <p className="proj-card__role">{p.role}</p>
-                </div>
-                <p className="proj-card__challenge">{p.challenge}</p>
-                <div className="proj-card__value">
-                  <span className="mono">{k.value.toUpperCase()}</span>
-                  <p>{p.value}</p>
-                </div>
-                <div className="proj-card__tags">
-                  {p.tags.slice(0, 2).map((tg, j) => (
-                    <span key={j} className={"tag " + (j === 0 ? "tag--accent" : "tag--warm")}>
-                      {tg}
-                    </span>
-                  ))}
-                </div>
-              </TiltCard>
-            </Reveal>
-          ))}
+      <ProjectMotionRail items={rest} valueLabel={k.value} lang={lang} />
+    </section>
+  );
+}
+
+/* ─── Project Motion Rail — drag carousel: active card forward, others fog ─── */
+type ProjItem = { i: string; name: string; role: string; challenge: string; value: string; tags: string[] };
+
+function ProjectMotionRail({ items, valueLabel, lang }: { items: ProjItem[]; valueLabel: string; lang: Lang }) {
+  const reduce = useReducedMotion();
+  const [emblaRef, embla] = useEmblaCarousel({
+    align: "center",
+    loop: false,
+    containScroll: "trimSnaps",
+    direction: RTL(lang) ? "rtl" : "ltr",
+    skipSnaps: false,
+    dragFree: false,
+  });
+  const [selected, setSelected] = useState(0);
+  const [canPrev, setCanPrev] = useState(false);
+  const [canNext, setCanNext] = useState(false);
+  const [dragging, setDragging] = useState(false);
+
+  const onSelect = useCallback(() => {
+    if (!embla) return;
+    setSelected(embla.selectedScrollSnap());
+    setCanPrev(embla.canScrollPrev());
+    setCanNext(embla.canScrollNext());
+  }, [embla]);
+
+  useEffect(() => {
+    if (!embla) return;
+    onSelect();
+    const onDown = () => setDragging(true);
+    const onUp = () => setDragging(false);
+    embla.on("select", onSelect);
+    embla.on("reInit", onSelect);
+    embla.on("pointerDown", onDown);
+    embla.on("pointerUp", onUp);
+    embla.on("settle", onUp);
+    return () => {
+      embla.off("select", onSelect);
+      embla.off("reInit", onSelect);
+      embla.off("pointerDown", onDown);
+      embla.off("pointerUp", onUp);
+      embla.off("settle", onUp);
+    };
+  }, [embla, onSelect]);
+
+  const scrollPrev = useCallback(() => {
+    embla?.scrollPrev();
+  }, [embla]);
+  const scrollNext = useCallback(() => {
+    embla?.scrollNext();
+  }, [embla]);
+  const scrollTo = useCallback(
+    (i: number) => {
+      embla?.scrollTo(i);
+    },
+    [embla]
+  );
+
+  const onKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key === "ArrowRight") {
+        e.preventDefault();
+        if (RTL(lang)) scrollPrev();
+        else scrollNext();
+      } else if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        if (RTL(lang)) scrollNext();
+        else scrollPrev();
+      } else if (e.key === "Home") {
+        e.preventDefault();
+        scrollTo(0);
+      } else if (e.key === "End") {
+        e.preventDefault();
+        scrollTo(items.length - 1);
+      }
+    },
+    [lang, scrollPrev, scrollNext, scrollTo, items.length]
+  );
+
+  const stateFor = (i: number) => {
+    const d = Math.abs(i - selected);
+    if (reduce) return { scale: 1, opacity: 1, filter: "blur(0px)", y: 0 };
+    if (d === 0) return { scale: 1.055, opacity: 1, filter: "blur(0px)", y: -8 };
+    if (d === 1) return { scale: 0.945, opacity: 0.78, filter: "blur(1px)", y: 0 };
+    return { scale: 0.9, opacity: 0.45, filter: "blur(3px)", y: 0 };
+  };
+
+  return (
+    <div className="proj-motion">
+      <div
+        className={"proj-motion__viewport" + (dragging ? " is-dragging" : "")}
+        ref={emblaRef}
+        tabIndex={0}
+        role="group"
+        aria-roledescription="carousel"
+        aria-label="Selected projects — drag, swipe, or use arrow keys"
+        onKeyDown={onKeyDown}
+      >
+        <div className="proj-motion__track">
+          {items.map((p, i) => {
+            const active = i === selected;
+            return (
+              <div
+                className="proj-motion__slide"
+                key={p.i}
+                role="group"
+                aria-roledescription="slide"
+                aria-label={`${i + 1} of ${items.length}: ${p.name}`}
+                aria-current={active ? "true" : undefined}
+              >
+                <motion.article
+                  className={"proj-motion-card" + (active ? " is-active" : "")}
+                  animate={stateFor(i)}
+                  transition={reduce ? { duration: 0 } : { type: "spring", stiffness: 240, damping: 32, mass: 0.7 }}
+                >
+                  <div className="proj-card__head">
+                    <span className="proj-card__idx mono">{p.i}</span>
+                    <h3 className="proj-card__name display-face">{p.name}</h3>
+                    <p className="proj-card__role">{p.role}</p>
+                  </div>
+                  <p className="proj-card__challenge">{p.challenge}</p>
+                  <div className="proj-card__value">
+                    <span className="mono">{valueLabel.toUpperCase()}</span>
+                    <p>{p.value}</p>
+                  </div>
+                  <div className="proj-card__tags">
+                    {p.tags.slice(0, 2).map((tg, j) => (
+                      <span key={j} className={"tag " + (j === 0 ? "tag--accent" : "tag--warm")}>
+                        {tg}
+                      </span>
+                    ))}
+                  </div>
+                </motion.article>
+              </div>
+            );
+          })}
         </div>
       </div>
-    </section>
+      <div className="proj-motion__controls">
+        <button className="proj-motion__arrow" onClick={scrollPrev} disabled={!canPrev} aria-label="Previous project" type="button">
+          ‹
+        </button>
+        <div className="proj-motion__dots" role="tablist" aria-label="Project navigation">
+          {items.map((p, i) => (
+            <button
+              key={p.i}
+              className="proj-motion__dot"
+              data-active={i === selected}
+              onClick={() => scrollTo(i)}
+              role="tab"
+              aria-selected={i === selected}
+              aria-label={`Go to project ${i + 1}`}
+              type="button"
+            />
+          ))}
+        </div>
+        <button className="proj-motion__arrow" onClick={scrollNext} disabled={!canNext} aria-label="Next project" type="button">
+          ›
+        </button>
+      </div>
+    </div>
   );
 }
 
@@ -846,13 +1013,14 @@ function Audiences({ lang }: { lang: Lang }) {
               <stop offset="100%" stopColor="rgba(0,255,255,0)" />
             </radialGradient>
           </defs>
-          <circle cx={cx} cy={cy} r="22" fill="url(#amap-core)" />
-          <circle cx={cx} cy={cy} r={r} fill="none" stroke="rgba(255,255,255,.08)" strokeDasharray="0.5 1.5" />
+          <circle cx={cx} cy={cy} r="24" fill="url(#amap-core)" className="amap__breathe" />
+          <circle cx={cx} cy={cy} r={r} fill="none" stroke="rgba(255,255,255,.08)" strokeDasharray="0.5 1.5" className="amap__ring" />
+          <circle cx={cx} cy={cy} r={r - 14} fill="none" stroke="rgba(0,255,255,.07)" strokeDasharray="0.4 2.4" className="amap__ring amap__ring--rev" />
           {t.items.map((_, i) => {
             const a = (i / n) * Math.PI * 2 - Math.PI / 2;
             const x = cx + r * Math.cos(a),
               y = cy + r * Math.sin(a);
-            return <line key={i} x1={cx} y1={cy} x2={x} y2={y} stroke="rgba(0,255,255,.18)" strokeWidth="0.25" />;
+            return <line key={i} x1={cx} y1={cy} x2={x} y2={y} stroke="rgba(0,255,255,.16)" strokeWidth="0.25" />;
           })}
           <circle cx={cx} cy={cy} r="6" fill="rgba(4,7,13,.9)" stroke="#00FFFF" strokeWidth="0.4" />
           <circle cx={cx} cy={cy} r="1.8" fill="#00FFFF" className="engine__pulse" />
@@ -866,11 +1034,13 @@ function Audiences({ lang }: { lang: Lang }) {
           const x = 50 + 36 * Math.cos(rad);
           const y = 50 + 36 * Math.sin(rad);
           return (
-            <Reveal key={i} delay={i * 100} as="div" className="amap__node" style={{ left: `${x}%`, top: `${y}%` }}>
-              <TiltCard className="amap__card" intensity={6}>
-                <span className="amap__t">{a.t}</span>
-                <span className="amap__d">{a.d}</span>
-              </TiltCard>
+            <Reveal key={i} delay={i * 90} as="div" className="amap__node" style={{ left: `${x}%`, top: `${y}%` }}>
+              <div className="amap__orbit" style={{ animationDelay: `${-i * 1.6}s`, animationDuration: `${8 + (i % 3)}s` }}>
+                <div className="amap__card" tabIndex={0} role="group" aria-label={a.t}>
+                  <span className="amap__t">{a.t}</span>
+                  <span className="amap__d">{a.d}</span>
+                </div>
+              </div>
             </Reveal>
           );
         })}

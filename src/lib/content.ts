@@ -191,7 +191,7 @@ export const content = {
         { i: "06", t: "Data-Driven Decisions", b: "Evidence-led dashboards, KPI architecture, and decision-support logic for steady, calm judgment.", tags: ["Dashboards", "KPIs"], glyph: "data" },
         { i: "07", t: "AI-Assisted Product Delivery", b: "Builds with Claude Code, Codex, ChatGPT, React, Vite, Supabase, Vercel — product thinking, not just prompts.", tags: ["Product", "Build", "Ship"], glyph: "ship" },
         { i: "08", t: "Curriculum & Education", b: "Beginner-to-advanced AI learning paths for teachers, parents, municipalities, students, and teams.", tags: ["Curriculum", "Training"], glyph: "edu" },
-        { i: "09", t: "Renewable & ESG Advisory", b: "Agrivoltaic commercialization, investor-readiness, ESG narrative, and sustainable-finance exposure.", tags: ["Agrivoltaic", "ESG"], glyph: "leaf" },
+        { i: "09", t: "Startup Operations & Strategic Development", b: "Operating models, market-entry and penetration strategy, risk management, investor-readiness, and execution roadmaps for founders and newborn companies.", tags: ["Startups", "Operations"], glyph: "startup" },
         { i: "10", t: "Multilingual Documentation", b: "Business, academic, legal, and technical writing across Arabic, English, Hebrew, and Italian.", tags: ["AR · EN · HE · IT", "RTL"], glyph: "lang" }
       ]
     },
@@ -208,7 +208,7 @@ export const content = {
         { i: "06", t: "قرارات قائمة على البيانات", b: "لوحات قائمة على الأدلة وبنية مؤشرات أداء ومنطق دعم قرارات لحُكم هادئ ومستقر.", tags: ["لوحات", "مؤشرات"], glyph: "data" },
         { i: "07", t: "تطوير منتجات بمساعدة الذكاء الاصطناعي", b: "بناء باستخدام Claude Code وCodex وChatGPT وReact وVite وSupabase وVercel — تفكير منتج لا مجرّد إيعازات.", tags: ["منتج", "بناء", "إطلاق"], glyph: "ship" },
         { i: "08", t: "المناهج والتعليم", b: "مسارات تعلّم من المبتدئ إلى المتقدّم للمعلّمين والآباء والبلديات والطلاب والفِرَق.", tags: ["مناهج", "تدريب"], glyph: "edu" },
-        { i: "09", t: "الطاقة المتجدّدة والـ ESG", b: "تسويق الزراعة الكهروضوئية وجاهزية المستثمرين وسرديات الاستدامة والتمويل المستدام.", tags: ["زراعة كهروضوئية", "ESG"], glyph: "leaf" },
+        { i: "09", t: "التطوير الاستراتيجي والتشغيلي للشركات الناشئة", b: "نماذج التشغيل، واستراتيجية دخول السوق واختراقه، وإدارة المخاطر، وجاهزية المستثمرين، وخطط التنفيذ للمؤسّسين والشركات الناشئة.", tags: ["شركات ناشئة", "تشغيل"], glyph: "startup" },
         { i: "10", t: "التوثيق متعدد اللغات", b: "كتابة أعمال وأكاديمية وقانونية وتقنية بالعربية والإنجليزية والعبرية والإيطالية.", tags: ["AR · EN · HE · IT", "RTL"], glyph: "lang" }
       ]
     },
@@ -225,7 +225,7 @@ export const content = {
         { i: "06", t: "החלטות מבוססות נתונים", b: "דשבורדים מבוססי ראיות, ארכיטקטורת מדדים והיגיון לתמיכה בהחלטות לשיקול דעת רגוע.", tags: ["דשבורדים", "מדדים"], glyph: "data" },
         { i: "07", t: "פיתוח מוצר בעזרת בינה מלאכותית", b: "בנייה עם Claude Code, Codex, ChatGPT, React, Vite, Supabase, Vercel — חשיבת מוצר, לא רק פרומפטים.", tags: ["מוצר", "בנייה", "השקה"], glyph: "ship" },
         { i: "08", t: "תוכניות לימוד וחינוך", b: "מסלולי לימוד מהמתחיל למתקדם למורים, הורים, רשויות, סטודנטים וצוותים.", tags: ["תוכניות", "הדרכה"], glyph: "edu" },
-        { i: "09", t: "אנרגיה מתחדשת ו-ESG", b: "מסחור אגריוולטאי, מוכנות למשקיעים, נרטיב קיימות ומימון ירוק.", tags: ["אגריוולטאי", "ESG"], glyph: "leaf" },
+        { i: "09", t: "פיתוח אסטרטגי ותפעולי לסטארטאפים", b: "מודלי הפעלה, אסטרטגיית כניסה וחדירה לשוק, ניהול סיכונים, מוכנות למשקיעים ומפות ביצוע למייסדים ולחברות צעירות.", tags: ["סטארטאפים", "תפעול"], glyph: "startup" },
         { i: "10", t: "תיעוד רב-לשוני", b: "תוכן עסקי, אקדמי, משפטי וטכני בערבית, אנגלית, עברית ואיטלקית.", tags: ["AR · EN · HE · IT", "RTL"], glyph: "lang" }
       ]
     }
@@ -268,12 +268,12 @@ export const content = {
           outputs: "Financial models · pricing frameworks · investor decks · execution roadmap.",
           value: "Commercialization clarity for a multi-entity renewable-energy ecosystem.",
           tags: ["Renewable", "CFO-level", "Investor-ready"] },
-        { i: "06", name: "ESG & Sustainable Finance", role: "Advisor (Supporting Exposure)",
-          challenge: "An international platform required ESG narrative, green-investment thinking, and investor communication.",
-          rolex: "Supporting advisory work on ESG finance, sustainability narrative, and investor-facing communication.",
-          outputs: "ESG positioning · sustainability narrative · investor materials.",
-          value: "Credible bridge between sustainability intent and investor-grade communication.",
-          tags: ["ESG", "Sustainable finance"] },
+        { i: "06", name: "Startup Operations & Strategic Development", role: "Operations & Strategy Advisor",
+          challenge: "Early-stage founders and newborn companies need structured operating logic, a clear market-entry path, risk visibility, and credible investor materials.",
+          rolex: "Operating-model design, market-entry and penetration strategy, risk analysis, investor-readiness materials, and execution roadmaps.",
+          outputs: "Operating models · market-entry plans · risk maps · investor decks · execution roadmaps.",
+          value: "Turns early-stage uncertainty into structured operating logic, market direction, and practical execution.",
+          tags: ["Startups", "Operations", "Market entry", "Risk"] },
         { i: "07", name: "Municipal AI · Notion Productivity Training", role: "AI Trainer · Workflow Designer",
           challenge: "Municipal departments struggle to translate AI promise into daily productivity.",
           rolex: "Designs department-level simulations covering tasks, meetings, correspondence, and AI-assisted reporting.",
@@ -324,12 +324,12 @@ export const content = {
           outputs: "نماذج مالية · أُطر تسعير · عروض للمستثمرين · خارطة طريق للتنفيذ.",
           value: "وضوح في تسويق منظومة طاقة متجدّدة متعدّدة الكيانات.",
           tags: ["طاقة متجدّدة", "بمستوى CFO", "جاهزية مستثمر"] },
-        { i: "06", name: "ESG والتمويل المستدام", role: "مستشار (تعرّض داعم)",
-          challenge: "تتطلّب منصّة دولية سردية ESG وتفكيراً في الاستثمار الأخضر وتواصلاً مع المستثمرين.",
-          rolex: "عمل استشاري داعم في تمويل ESG وسرديات الاستدامة والتواصل مع المستثمرين.",
-          outputs: "تموضع ESG · سردية استدامة · مواد للمستثمرين.",
-          value: "جسر موثوق بين نية الاستدامة والتواصل بمستوى المستثمر.",
-          tags: ["ESG", "تمويل مستدام"] },
+        { i: "06", name: "التطوير الاستراتيجي والتشغيلي للشركات الناشئة", role: "مستشار تشغيل واستراتيجية",
+          challenge: "يحتاج المؤسّسون والشركات الناشئة إلى منطق تشغيلي منظَّم ومسار واضح لدخول السوق ووضوح في المخاطر ومواد مقنعة للمستثمرين.",
+          rolex: "تصميم نماذج التشغيل، واستراتيجية دخول السوق واختراقه، وتحليل المخاطر، ومواد جاهزية المستثمرين، وخطط التنفيذ.",
+          outputs: "نماذج تشغيل · خطط دخول السوق · خرائط مخاطر · عروض للمستثمرين · خرائط طريق للتنفيذ.",
+          value: "يحوّل ضبابية المراحل الأولى إلى منطق تشغيلي واضح واتجاه سوقي وخطة تنفيذ عملية.",
+          tags: ["شركات ناشئة", "تشغيل", "دخول السوق", "إدارة المخاطر"] },
         { i: "07", name: "تدريب البلديات · Notion", role: "مدرّب AI · مصمّم سير عمل",
           challenge: "تواجه أقسام البلديات صعوبة في ترجمة وعد الذكاء الاصطناعي إلى إنتاجية يومية.",
           rolex: "محاكاة على مستوى الأقسام تشمل المهام والاجتماعات والمراسلات والتقارير المدعومة.",
@@ -380,12 +380,12 @@ export const content = {
           outputs: "מודלים פיננסיים · מסגרות תמחור · מצגות למשקיעים · מפת דרכים.",
           value: "בהירות מסחור לאקוסיסטם של אנרגיה מתחדשת רב-ישותי.",
           tags: ["אנרגיה מתחדשת", "ברמת CFO", "מוכן למשקיעים"] },
-        { i: "06", name: "ESG ופיננסים בני קיימא", role: "יועץ (חשיפה תומכת)",
-          challenge: "פלטפורמה בינלאומית נזקקה לנרטיב ESG, חשיבת השקעה ירוקה ותקשורת למשקיעים.",
-          rolex: "עבודת ייעוץ תומכת בפיננסי ESG, נרטיב קיימות ותקשורת למשקיעים.",
-          outputs: "מיצוב ESG · נרטיב קיימות · חומרים למשקיעים.",
-          value: "גשר אמין בין כוונת קיימות לתקשורת ברמת משקיע.",
-          tags: ["ESG", "פיננסים מקיימים"] },
+        { i: "06", name: "פיתוח אסטרטגי ותפעולי לסטארטאפים", role: "יועץ תפעול ואסטרטגיה",
+          challenge: "מייסדים בשלב מוקדם וחברות צעירות צריכים לוגיקה תפעולית מובנית, מסלול ברור לכניסה לשוק, נראוּת סיכונים וחומרים אמינים למשקיעים.",
+          rolex: "עיצוב מודל הפעלה, אסטרטגיית כניסה וחדירה לשוק, ניתוח סיכונים, חומרי מוכנות למשקיעים ומפות ביצוע.",
+          outputs: "מודלי הפעלה · תוכניות כניסה לשוק · מפות סיכונים · מצגות למשקיעים · מפות ביצוע.",
+          value: "הופך אי-ודאות של שלבים מוקדמים ללוגיקה תפעולית ברורה, כיוון שוק ותוכנית ביצוע מעשית.",
+          tags: ["סטארטאפים", "תפעול", "כניסה לשוק", "ניהול סיכונים"] },
         { i: "07", name: "AI ברשויות · Notion", role: "מדריך · מעצב תהליכים",
           challenge: "מחלקות ברשויות מתקשות להפוך את הבטחת ה-AI לפרודוקטיביות יומית.",
           rolex: "סימולציות ברמת מחלקה שמכסות משימות, ישיבות, התכתבויות ודיווח בעזרת AI.",
@@ -411,7 +411,7 @@ export const content = {
         { t: "Founders & C-suite", d: "Strategy, finance, structure, decisions." },
         { t: "Municipal & public sector", d: "AI productivity, governance, training." },
         { t: "Education leaders", d: "Curriculum, teacher tracks, parent literacy." },
-        { t: "Renewable-energy teams", d: "Commercialization, investor-readiness, ESG." },
+        { t: "Startup teams", d: "Market entry · operating models · growth" },
         { t: "Transformation teams", d: "Operating models, dashboards, adoption." },
         { t: "Multilingual organizations", d: "AR · EN · HE · IT documentation discipline." }
       ]
@@ -424,7 +424,7 @@ export const content = {
         { t: "المؤسّسون والإدارة العليا", d: "استراتيجية ومالية وبنية وقرارات." },
         { t: "البلديات والقطاع العام", d: "إنتاجية AI وحوكمة وتدريب." },
         { t: "قادة التعليم", d: "مناهج ومسارات للمعلّمين وثقافة الآباء." },
-        { t: "فِرَق الطاقة المتجدّدة", d: "تسويق وجاهزية مستثمر وESG." },
+        { t: "فِرَق الشركات الناشئة", d: "دخول السوق · نماذج التشغيل · النمو" },
         { t: "فِرَق التحوّل", d: "نماذج تشغيل ولوحات وتبنٍّ." },
         { t: "المنظمات متعددة اللغات", d: "انضباط التوثيق بالعربية والإنجليزية والعبرية والإيطالية." }
       ]
@@ -437,7 +437,7 @@ export const content = {
         { t: "מייסדים והנהלה", d: "אסטרטגיה, פיננסים, מבנה, החלטות." },
         { t: "רשויות ומגזר ציבורי", d: "פרודוקטיביות AI, ממשל, הדרכה." },
         { t: "מובילי חינוך", d: "תוכניות לימוד, מורים, אוריינות הורים." },
-        { t: "אנרגיה מתחדשת", d: "מסחור, מוכנות למשקיעים, ESG." },
+        { t: "צוותי סטארטאפים", d: "כניסה לשוק · מודלי הפעלה · צמיחה" },
         { t: "צוותי טרנספורמציה", d: "מודלי הפעלה, דשבורדים, הטמעה." },
         { t: "ארגונים רב-לשוניים", d: "משמעת תיעוד ב-AR · EN · HE · IT." }
       ]
@@ -456,7 +456,7 @@ export const content = {
           { yr: "2025 — Present", title: "Curriculum Architect & AI Trainer", org: "Ship It 360 · 360 AI · Axiom AI Productivity", flag: "current" },
           { yr: "2024 — Present", title: "AI-Assisted Product, App & Technical Build Work", org: "Independent", flag: "current" },
           { yr: "2024/2025 — Present", title: "Acting MD · CFO-Level Strategic Advisor", org: "AgriSolarCom · TriSolar · DualHarvest", flag: "current" },
-          { yr: "2024 — 2025", title: "ESG & Sustainable Finance Advisory", org: "International Company", flag: "" },
+          { yr: "2024 — 2025", title: "Startup Operations & Strategic Development Advisory", org: "Independent · Early-stage teams", flag: "" },
           { yr: "2024 — Present", title: "AI · Notion · Municipal Productivity Training", org: "Israel", flag: "current" }
         ]},
         { label: "Prior career", items: [
@@ -484,7 +484,7 @@ export const content = {
           { yr: "2025 — حتى الآن", title: "مهندس مناهج ومدرّب AI", org: "Ship It 360 · 360 AI · Axiom", flag: "current" },
           { yr: "2024 — حتى الآن", title: "تطوير منتجات وتطبيقات بمساعدة AI", org: "مستقلّ", flag: "current" },
           { yr: "2024/2025 — حتى الآن", title: "مدير عام بالنيابة · مستشار بمستوى CFO", org: "AgriSolarCom · TriSolar · DualHarvest", flag: "current" },
-          { yr: "2024 — 2025", title: "استشارة ESG والتمويل المستدام", org: "شركة دولية", flag: "" },
+          { yr: "2024 — 2025", title: "استشارة التطوير الاستراتيجي والتشغيلي للشركات الناشئة", org: "مستقلّ · فِرَق في مراحل مبكّرة", flag: "" },
           { yr: "2024 — حتى الآن", title: "تدريب AI و Notion والإنتاجية البلدية", org: "إسرائيل", flag: "current" }
         ]},
         { label: "المسيرة السابقة", items: [
@@ -512,7 +512,7 @@ export const content = {
           { yr: "2025 — היום", title: "ארכיטקט תכנית ומדריך AI", org: "Ship It 360 · 360 AI · Axiom", flag: "current" },
           { yr: "2024 — היום", title: "בנייה טכנית בעזרת AI", org: "עצמאי", flag: "current" },
           { yr: "2024/2025 — היום", title: "מנכ\"ל בפועל · יועץ ברמת CFO", org: "AgriSolarCom · TriSolar · DualHarvest", flag: "current" },
-          { yr: "2024 — 2025", title: "ייעוץ ESG ופיננסים מקיימים", org: "חברה בינלאומית", flag: "" },
+          { yr: "2024 — 2025", title: "ייעוץ פיתוח אסטרטגי ותפעולי לסטארטאפים", org: "עצמאי · צוותים בשלב מוקדם", flag: "" },
           { yr: "2024 — היום", title: "הדרכת AI · Notion · רשויות מקומיות", org: "ישראל", flag: "current" }
         ]},
         { label: "קריירה קודמת", items: [
