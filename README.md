@@ -1,23 +1,30 @@
 # Antonio Rawad Nassar — Portfolio
 
-Personal portfolio / CV website. Built with **Next.js 16** (App Router) + **TypeScript** + **Tailwind CSS v4**.
+C-Level Strategy & AI Transformation Advisor. Trilingual (EN / AR / HE) single-page
+portfolio with RTL support, built on **Next.js 16** (App Router) + **TypeScript**.
 
-## Edit your content
+Implemented from a Claude Design handoff bundle — see [`design-handoff/`](./design-handoff/)
+for the original HTML/CSS/JS prototype the design was authored in.
 
-Everything you see on the page comes from one file:
+## Edit the content
+
+All copy lives in one file:
 
 ```
-src/lib/profile.ts
+src/lib/content.ts
 ```
 
-Open it, change your name / role / experience / projects / skills / links, save — the page updates automatically. Placeholders are marked with `// TODO`.
-
-To drop in a downloadable CV: put the PDF in `public/` (e.g. `public/antonio-rawad-nassar-cv.pdf`) and set `resumeUrl` in `profile.ts`.
+It holds the EN / AR / HE strings for every section (hero, positioning, advisory,
+projects, audiences, timeline, ecosystem, leadership, contact, footer). Edit the
+strings, save — the page updates. Social links and the phone number are in the
+`social` block at the bottom of that file.
 
 ## Change the look
 
-- `src/app/globals.css` — colors, fonts, background, scroll behavior (CSS variables at the top).
-- `src/app/page.tsx` — page layout and section markup.
+- `src/app/tokens.css` — design system tokens: colours, type scale, spacing, motion. Local fonts (Cairo, JetBrains Mono) are declared here and shipped from `public/fonts/`.
+- `src/app/design.css` — all component styles (nav, hero, clarity engine, advisory grid, projects, timeline, ecosystem, CTA, footer, RTL overrides, animations).
+- `src/app/page.tsx` — the page itself (sections as React components).
+- Google Fonts (Outfit, Heebo, Frank Ruhl Libre, IBM Plex Sans Arabic, …) are loaded via `<link>` tags in `src/app/layout.tsx`.
 
 ## Run it locally
 
@@ -25,8 +32,6 @@ To drop in a downloadable CV: put the PDF in `public/` (e.g. `public/antonio-raw
 npm install      # first time only
 npm run dev      # http://localhost:3000
 ```
-
-Other commands:
 
 ```bash
 npm run build    # production build
@@ -36,17 +41,22 @@ npm run lint     # eslint
 
 ## Deploy
 
-Easiest: import the repo on [Vercel](https://vercel.com/new) — it auto-detects Next.js, no config needed. (Netlify / Cloudflare Pages also work.)
+Import the repo on [Vercel](https://vercel.com/new) — it auto-detects Next.js, no config needed.
 
-## Project structure
+## Structure
 
 ```
 src/
   app/
-    layout.tsx     # fonts + <head> metadata
-    page.tsx       # the whole portfolio page (sections as components)
-    globals.css    # theme tokens + global styles
+    layout.tsx       # <html>, <head> (Google Fonts), metadata
+    page.tsx         # "use client" — the full portfolio (sections as components)
+    tokens.css       # design tokens + @font-face (local fonts)
+    design.css       # component styles + RTL + animations
   lib/
-    profile.ts     # ← your content lives here
-public/            # static assets (images, CV pdf, og image…)
+    content.ts       # ← all EN/AR/HE copy + social links
+public/
+  fonts/             # Cairo + JetBrains Mono (.ttf)
+  assets/            # antonio-portrait.png
+  cv/                # Antonio-Rawad-Nassar.pdf
+design-handoff/      # original Claude Design prototype (reference only — not built)
 ```

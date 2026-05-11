@@ -1,47 +1,38 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Plus_Jakarta_Sans, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import { profile } from "@/lib/profile";
+import "./tokens.css";
+import "./design.css";
+import { content } from "@/lib/content";
 
-const jakarta = Plus_Jakarta_Sans({
-  variable: "--font-jakarta",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-  display: "swap",
-});
+const meta = content.meta.en;
 
 export const metadata: Metadata = {
-  title: `${profile.name} — ${profile.role}`,
-  description: profile.summary,
+  title: meta.title,
+  description: meta.description,
   openGraph: {
-    title: `${profile.name} — ${profile.role}`,
-    description: profile.summary,
+    title: meta.title,
+    description: meta.description,
     type: "website",
   },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html
-      lang="en"
-      className={`${jakarta.variable} ${playfair.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full">{children}</body>
+    <html lang="en" dir="ltr">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&family=Frank+Ruhl+Libre:wght@500;700;900&family=Noto+Sans+Hebrew:wght@400;500;600;700&family=Assistant:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body>{children}</body>
     </html>
   );
 }

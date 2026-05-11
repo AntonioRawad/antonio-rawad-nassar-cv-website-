@@ -1,0 +1,247 @@
+/**
+ * Fikra Design System — Azure Blueprint v0.1
+ * Color, type, spacing, radius, elevation and motion tokens.
+ *
+ * Authoritative spec: operator surfaces only (Visual Lab, Bottega,
+ * Fikra dashboard, AS IS clinical). Marketing surfaces are out of scope.
+ *
+ * Font note: Cairo (static 200–900) and JetBrains Mono (variable, roman
+ * + italic) ship locally under /fonts. Outfit is still loaded from
+ * Google Fonts — host it locally before production.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap');
+
+/* JetBrains Mono — self-hosted variable, roman + italic */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 100 800;
+  font-display: swap;
+  src: url('fonts/JetBrainsMono-VariableFont_wght.ttf') format('truetype-variations');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: italic;
+  font-weight: 100 800;
+  font-display: swap;
+  src: url('fonts/JetBrainsMono-Italic-VariableFont_wght.ttf') format('truetype-variations');
+}
+
+/* Cairo — Arabic + Latin, self-hosted static weights */
+@font-face {
+  font-family: 'Cairo';
+  font-style: normal;
+  font-weight: 200;
+  font-display: swap;
+  src: url('fonts/Cairo-ExtraLight.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Cairo';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('fonts/Cairo-Light.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Cairo';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fonts/Cairo-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Cairo';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('fonts/Cairo-Medium.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Cairo';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('fonts/Cairo-SemiBold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Cairo';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('fonts/Cairo-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Cairo';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('fonts/Cairo-ExtraBold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Cairo';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url('fonts/Cairo-Black.ttf') format('truetype');
+}
+
+:root {
+  /* ───── 2. COLOR TOKENS ────────────────────────────────────────── */
+
+  /* 2.1 Foundation — Night Sky Black canvas */
+  --color-canvas:           #04070D;
+  --color-canvas-raised:    #0A0F1A;
+  --color-canvas-sunken:    #02040A;
+  --color-stroke:           #1A2230;
+  --color-stroke-strong:    #2A3548;
+
+  /* 2.2 Accent — Celestial Azure (single primary, use sparingly) */
+  --color-accent:           #00FFFF;
+  --color-accent-soft:      rgba(0, 255, 255, 0.12);
+  --color-accent-glow:      rgba(0, 255, 255, 0.35);
+  --color-accent-dim:       #0099A8;
+
+  /* 2.3 Warmth — Polished Copper (user-attention, distinct from system-active) */
+  --color-warm:             #B87333;
+  --color-warm-soft:        rgba(184, 115, 51, 0.12);
+  --color-warm-glow:        rgba(184, 115, 51, 0.30);
+
+  /* 2.4 Text */
+  --color-text-primary:     #E8ECF2;
+  --color-text-secondary:   #A0AAB8;
+  --color-text-muted:       #5C6675;
+  --color-text-on-accent:   #04070D;
+
+  /* 2.5 Semantic — used for state, not for aesthetic */
+  --color-success:          #3FCF8E;
+  --color-success-soft:     rgba(63, 207, 142, 0.12);
+  --color-danger:           #F87171;
+  --color-danger-soft:      rgba(248, 113, 113, 0.12);
+  --color-info:             var(--color-accent);
+
+  /* ───── 3. TYPOGRAPHY ──────────────────────────────────────────── */
+
+  --font-sans:    'Outfit', system-ui, -apple-system, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  --font-arabic:  'Cairo', system-ui, sans-serif;
+
+  /* Scale (operator density — no display sizes >32px) */
+  --text-display:  32px;   --leading-display: 40px;
+  --text-h1:       24px;   --leading-h1:      32px;
+  --text-h2:       18px;   --leading-h2:      26px;
+  --text-h3:       15px;   --leading-h3:      22px;
+  --text-body:     14px;   --leading-body:    22px;
+  --text-small:    13px;   --leading-small:   20px;
+  --text-micro:    11px;   --leading-micro:   16px;
+
+  --weight-regular:  400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+  --weight-bold:     700;
+
+  /* ───── 4. SPACING / RADIUS / ELEVATION ────────────────────────── */
+
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-16: 64px;
+
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   16px;
+  --radius-pill: 999px;
+
+  /* Elevation — dark theme uses border-luminance + inset glow, not drop shadow */
+  --elev-1:      0 0 0 1px var(--color-stroke);
+  --elev-2:      0 0 0 1px var(--color-stroke-strong), 0 4px 12px rgba(0, 0, 0, 0.4);
+  --elev-focus:  0 0 0 2px var(--color-accent-glow);
+  --elev-active: inset 0 0 0 1px var(--color-accent), 0 0 16px var(--color-accent-glow);
+  --elev-warn:   0 0 0 1px var(--color-warm), 0 0 12px var(--color-warm-glow);
+
+  /* ───── 5. MOTION ──────────────────────────────────────────────── */
+
+  --motion-instant: 80ms;
+  --motion-fast:    160ms;
+  --motion-normal:  240ms;
+  --motion-slow:    400ms;
+
+  --ease-out:        cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out:     cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-mechanical: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ───── Auto-select script via [lang] ───────────────────────────── */
+:root,
+[lang^="en"], [lang^="fr"], [lang^="de"], [lang^="es"] { font-family: var(--font-sans); }
+[lang^="ar"], [lang^="he"], [lang="rtl"]               { font-family: var(--font-arabic); }
+[lang^="ar"] [data-numeric], [lang^="he"] [data-numeric] { font-family: var(--font-mono); }
+
+/* ───── Semantic element styles ─────────────────────────────────── */
+
+html, body {
+  background: var(--color-canvas);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.display { font-size: var(--text-display); line-height: var(--leading-display); font-weight: var(--weight-bold); letter-spacing: -0.01em; }
+h1, .h1  { font-size: var(--text-h1);      line-height: var(--leading-h1);      font-weight: var(--weight-semibold); }
+h2, .h2  { font-size: var(--text-h2);      line-height: var(--leading-h2);      font-weight: var(--weight-semibold); }
+h3, .h3  { font-size: var(--text-h3);      line-height: var(--leading-h3);      font-weight: var(--weight-semibold); }
+.body    { font-size: var(--text-body);    line-height: var(--leading-body);    font-weight: var(--weight-regular); }
+.small   { font-size: var(--text-small);   line-height: var(--leading-small);   color: var(--color-text-secondary); }
+.micro   { font-size: var(--text-micro);   line-height: var(--leading-micro);   color: var(--color-text-muted); }
+
+/* Mono is the data font — IDs, counts, percentages, timestamps */
+code, kbd, samp, .mono,
+[data-numeric] {
+  font-family: var(--font-mono);
+  font-feature-settings: "tnum" 1, "zero" 1;
+}
+
+/* Uppercase micro labels get the only allowed tracking adjustment */
+.label-uppercase {
+  font-size: var(--text-micro);
+  line-height: var(--leading-micro);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-family: var(--font-mono);
+  color: var(--color-text-secondary);
+}
+
+/* Arabic line-height is +2px over the Latin equivalent at every size */
+[lang^="ar"] .display { line-height: 42px; }
+[lang^="ar"] .h1       { line-height: 34px; }
+[lang^="ar"] .h2       { line-height: 28px; }
+[lang^="ar"] .h3       { line-height: 24px; }
+[lang^="ar"] .body     { line-height: 24px; }
+[lang^="ar"] .small    { line-height: 22px; }
+[lang^="ar"] .micro    { line-height: 18px; }
+
+/* Default focus ring — usable directly */
+:focus-visible {
+  outline: none;
+  box-shadow: var(--elev-focus);
+  border-radius: var(--radius-sm);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
