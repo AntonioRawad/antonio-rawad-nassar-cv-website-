@@ -1165,86 +1165,105 @@ html[lang="ar"] .proj-hero__k, html[lang="he"] .proj-hero__k { letter-spacing: 0
 .proj-hero__cta:hover { background: rgba(0,255,255,.08); transform: translateX(3px); box-shadow: 0 0 22px rgba(0,255,255,.18); }
 html[dir="rtl"] .proj-hero__cta:hover { transform: translateX(-3px); }
 
-/* ── Project Motion Rail — drag carousel, active card forward, others fog ── */
-.proj-motion { position: relative; }
-/* viewport: hides the native scrollbar entirely (Embla uses transforms, not scroll).
-   Vertical padding (cancelled by negative margin) gives the scaled/lifted active
-   card and its glow room to breathe without being clipped. */
-.proj-motion__viewport {
+/* ── Project Coverflow Rail — cursor-driven 3D rail, active card forward, side cards into fog ──
+   Breathing room above (.proj-coverflow margin-top) keeps the rail from hugging the featured
+   cards. The stage is its own viewing window: a fixed-height box with horizontal edge-mask and
+   `overflow:hidden`; cards are absolutely stacked & centred, then offset by inline transforms
+   coming from per-card motion values in CoverflowCard. No scrollbar; nav is intentionally faint. */
+.proj-coverflow {
+  position: relative;
+  margin-top: clamp(64px, 8.5vw, 116px);   /* ← clear gap from the featured project cards */
+}
+.proj-coverflow__viewport {
+  position: relative;
+  height: clamp(484px, 36vw, 540px);
   overflow: hidden;
-  padding: 28px 0 40px;
-  margin: -28px 0 -40px;
   cursor: grab;
-  scrollbar-width: none;          /* belt-and-braces: no scrollbar */
-  -ms-overflow-style: none;
+  touch-action: pan-y;                      /* let the page still scroll vertically on touch */
+  user-select: none; -webkit-user-select: none;
+  border-radius: var(--radius-lg);
+  /* soft viewing-window edges so far cards melt into the dark instead of being hard-clipped */
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
 }
-.proj-motion__viewport::-webkit-scrollbar { display: none; }
-.proj-motion__viewport.is-dragging { cursor: grabbing; }
-.proj-motion__track {
-  display: flex;
-  gap: clamp(14px, 1.6vw, 22px);
-  touch-action: pan-y;
-  align-items: stretch;
+.proj-coverflow__viewport.is-grabbing { cursor: grabbing; }
+.proj-coverflow__viewport:focus-visible { outline: none; box-shadow: inset 0 0 0 1.5px var(--color-accent-glow); }
+.proj-coverflow__stack { position: absolute; inset: 0; pointer-events: none; }
+.proj-coverflow__slot {
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
+  perspective: 1700px;                      /* gives the per-card rotateY real depth */
 }
-.proj-motion__slide {
-  flex: 0 0 clamp(270px, 30vw, 350px);
-  min-width: 0;
-  display: flex;
-}
-.proj-motion-card {
-  flex: 1;
-  padding: clamp(20px, 1.8vw, 26px);
+.proj-coverflow-card {
+  width: min(384px, 80vw);
+  padding: clamp(22px, 1.9vw, 28px);
   border: 1px solid var(--color-stroke);
   border-radius: 18px;
   background:
     linear-gradient(170deg, rgba(0,255,255,.03) 0%, transparent 42%),
     var(--color-canvas-raised);
   display: flex; flex-direction: column; gap: 14px;
-  min-height: 320px;
-  transform-origin: center 60%;
+  min-height: 326px;
+  transform-origin: center;
+  backface-visibility: hidden;
   will-change: transform, opacity, filter;
-  transition: border-color 320ms ease, box-shadow 320ms ease, background 320ms ease;
+  transition: border-color 340ms ease, box-shadow 340ms ease, background 340ms ease;
 }
-.proj-motion-card.is-active {
-  border-color: rgba(0,255,255,0.42);
+.proj-coverflow-card.is-active {
+  border-color: rgba(0,255,255,0.44);
   background:
-    radial-gradient(420px 240px at 100% 0%, rgba(0,255,255,.13), transparent 55%),
-    radial-gradient(380px 240px at 0% 100%, rgba(184,115,51,.10), transparent 55%),
+    radial-gradient(440px 260px at 100% 0%, rgba(0,255,255,.14), transparent 55%),
+    radial-gradient(400px 260px at 0% 100%, rgba(184,115,51,.11), transparent 55%),
     var(--color-canvas-raised);
-  box-shadow: 0 32px 70px -22px rgba(0,0,0,.62), 0 0 44px rgba(0,255,255,.13);
-  position: relative; z-index: 10;
+  box-shadow: 0 36px 80px -24px rgba(0,0,0,.66), 0 0 50px rgba(0,255,255,.14);
 }
-.proj-motion-card:not(.is-active) { z-index: 1; }
-/* controls: small arrows + progress dots, no scrollbar */
-.proj-motion__controls {
+/* hint pill — fades out after the first cursor/drag/key interaction */
+.proj-coverflow__hint {
+  position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%);
+  font-size: 10px; letter-spacing: .22em; text-transform: uppercase; white-space: nowrap;
+  color: var(--color-text-muted);
+  background: rgba(8,12,18,.55); border: 1px solid var(--color-stroke);
+  border-radius: var(--radius-pill); padding: 6px 14px;
+  pointer-events: none; opacity: .85;
+  transition: opacity 600ms ease;
+  animation: cf-hint-pulse 2.6s ease-in-out infinite;
+}
+html[lang="ar"] .proj-coverflow__hint, html[lang="he"] .proj-coverflow__hint { letter-spacing: .04em; text-transform: none; }
+.proj-coverflow__hint.is-hidden { opacity: 0; }
+@keyframes cf-hint-pulse { 0%, 100% { opacity: .85; } 50% { opacity: .4; } }
+/* nav — deliberately understated: small ‹ ›, a progress hairline, a counter. Not the main control. */
+.proj-coverflow__nav {
   display: flex; align-items: center; justify-content: center; gap: 14px;
-  margin-top: 22px;
+  margin-top: 26px;
 }
-.proj-motion__arrow {
-  appearance: none; cursor: pointer;
-  width: 38px; height: 38px; display: grid; place-items: center;
+.proj-coverflow__arrow {
+  appearance: none; cursor: pointer; flex: none;
+  width: 34px; height: 34px; display: grid; place-items: center;
   border: 1px solid var(--color-stroke); border-radius: var(--radius-pill);
-  background: var(--color-canvas-raised); color: var(--color-text-secondary);
-  font-family: var(--font-mono); font-size: 16px; line-height: 1;
-  transition: all 220ms ease;
+  background: var(--color-canvas-raised); color: var(--color-text-muted);
+  font-family: var(--font-mono); font-size: 15px; line-height: 1;
+  transition: color 200ms ease, border-color 200ms ease, background 200ms ease;
 }
-.proj-motion__arrow:hover:not(:disabled) { color: var(--color-accent); border-color: var(--color-accent-dim); background: rgba(0,255,255,.06); transform: translateY(-1px); }
-.proj-motion__arrow:disabled { opacity: 0.35; cursor: default; }
-html[dir="rtl"] .proj-motion__arrow { transform: scaleX(-1); }
-html[dir="rtl"] .proj-motion__arrow:hover:not(:disabled) { transform: scaleX(-1) translateY(-1px); }
-.proj-motion__dots { display: flex; align-items: center; gap: 7px; }
-.proj-motion__dot {
-  appearance: none; cursor: pointer; padding: 0;
-  width: 7px; height: 7px; border-radius: var(--radius-pill);
-  border: 1px solid var(--color-stroke-strong, rgba(255,255,255,.18));
-  background: transparent;
-  transition: all 240ms ease;
+.proj-coverflow__arrow:hover { color: var(--color-accent); border-color: var(--color-accent-dim); background: rgba(0,255,255,.06); }
+html[dir="rtl"] .proj-coverflow__arrow { transform: scaleX(-1); }
+.proj-coverflow__track {
+  position: relative; flex: 0 1 220px; height: 2px;
+  background: var(--color-stroke); border-radius: 2px; overflow: hidden;
 }
-.proj-motion__dot[data-active="true"] {
-  width: 22px; background: var(--color-accent); border-color: transparent;
-  box-shadow: 0 0 12px var(--color-accent-glow);
+.proj-coverflow__fill {
+  position: absolute; inset-block: 0; inset-inline-start: 0; min-width: 6px;
+  background: linear-gradient(90deg, var(--color-warm), var(--color-accent));
+  box-shadow: 0 0 10px var(--color-accent-glow);
 }
-.proj-motion__viewport:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--color-accent-glow); border-radius: var(--radius-lg); }
+html[dir="rtl"] .proj-coverflow__fill { background: linear-gradient(270deg, var(--color-warm), var(--color-accent)); }
+.proj-coverflow__count { font-size: 11px; letter-spacing: .14em; color: var(--color-text-muted); flex: none; }
+/* reduced-motion / coarse-pointer fallback — a plain, fully readable grid; no transforms at all */
+.proj-coverflow--lite { margin-top: clamp(64px, 8.5vw, 116px); }
+.proj-coverflow__static {
+  display: grid; gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(258px, 1fr));
+}
+.proj-coverflow__static .proj-coverflow-card { width: auto; min-height: 0; }
 .proj-card__head { display: flex; flex-direction: column; gap: 4px; }
 .proj-card__idx { font-size: 11px; color: var(--color-warm); letter-spacing: .1em; }
 .proj-card__name { font-size: 18px; margin: 0; font-weight: 600; line-height: 1.2; text-wrap: balance; }
@@ -1487,25 +1506,128 @@ html[lang="ar"] .eco__chip, html[lang="he"] .eco__chip { font-family: inherit; f
 html[dir="rtl"] .eco__cta:hover { transform: translateX(-3px); }
 html[lang="ar"] .eco__cta, html[lang="he"] .eco__cta { font-family: inherit; letter-spacing: 0; }
 
-/* ── Leadership manifesto ── */
-.manifesto { display: grid; gap: 18px; }
-@media (min-width: 760px)  { .manifesto { grid-template-columns: repeat(2, 1fr); gap: 22px 28px; } }
-@media (min-width: 1100px) { .manifesto { grid-template-columns: repeat(3, 1fr); } }
-.manifesto__p {
-  padding: 24px 4px;
-  border-top: 1px solid var(--color-warm-stroke);
-  display: flex; flex-direction: column; gap: 8px;
-  position: relative;
+/* ── Leadership · The Human Operating System — the warm decision path ──
+   The human pause after the dark AI/strategy run. `.los__paper` is a textured warm backdrop
+   (soft highlights + faint ruled lines) with a whisper of scroll-parallax; `overflow: clip`
+   contains its bleed without creating a scroll container, so the left intro can stay sticky.
+   The right column is a vertical rail that "draws" as you scroll (`.los__rail-fill` scaleY) with
+   six nodes that light up when their principle hits the viewport's centre band — the active one
+   on a soft "note" card, the rest held quiet. */
+.los { position: relative; overflow: clip; }
+.los__paper {
+  position: absolute; inset: -8% 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(120% 78% at 16% 0%, rgba(255,255,255,.55), transparent 58%),
+    radial-gradient(110% 70% at 100% 100%, rgba(184,115,51,.10), transparent 55%),
+    repeating-linear-gradient(0deg, transparent 0 31px, rgba(27,24,16,.045) 31px 32px),
+    var(--color-warm-canvas);
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(180deg, transparent, #000 6%, #000 94%, transparent);
 }
-.manifesto__p::before {
-  content: ""; position: absolute; left: 0; top: -1px;
-  width: 36px; height: 2px; background: var(--color-warm);
+.los .shell { position: relative; z-index: 1; }
+.los__grid { display: grid; gap: clamp(36px, 5.5vw, 76px); align-items: start; }
+@media (min-width: 1000px) {
+  .los__grid { grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr); gap: clamp(48px, 5vw, 96px); }
 }
-html[dir="rtl"] .manifesto__p::before { left: auto; right: 0; }
-.manifesto__n { color: var(--color-warm); font-size: 11px; letter-spacing: .12em; }
-html[lang="ar"] .manifesto__n, html[lang="he"] .manifesto__n { letter-spacing: 0; font-size: 13px; }
-.manifesto__t { font-size: 22px; line-height: 1.2; margin: 0; font-weight: 600; color: var(--color-warm-ink); text-wrap: balance; }
-.manifesto__d { font-size: 14px; line-height: 1.6; color: var(--color-warm-ink-muted); margin: 0; text-wrap: pretty; }
+
+/* left — sticky editorial intro */
+.los__intro { display: flex; flex-direction: column; gap: 14px; }
+@media (min-width: 1000px) { .los__intro { position: sticky; top: clamp(84px, 14vh, 132px); } }
+.los__kicker {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--color-warm);
+}
+.los__kicker::before { content: ""; width: 26px; height: 1px; background: var(--color-warm); flex: none; }
+html[lang="ar"] .los__kicker, html[lang="he"] .los__kicker { letter-spacing: .06em; text-transform: none; }
+.los__os { margin: 0; font-size: clamp(13px, 1.4vw, 15px); font-weight: 600; letter-spacing: .04em; color: var(--color-warm-ink-muted); }
+.los__headline {
+  margin: 4px 0 0; font-size: clamp(28px, 3.7vw, 46px); line-height: 1.08; font-weight: 600;
+  color: var(--color-warm-ink); text-wrap: balance;
+}
+.los__lead { margin: 6px 0 0; font-size: clamp(14px, 1.5vw, 16px); line-height: 1.6; color: var(--color-warm-ink-muted); max-width: 42ch; text-wrap: pretty; }
+.los__quote {
+  position: relative; margin: 12px 0 0; padding-inline-start: 20px;
+  border-inline-start: 2px solid var(--color-warm);
+  font-size: clamp(14px, 1.5vw, 16.5px); line-height: 1.62; color: var(--color-warm-ink); font-style: italic;
+}
+.los__quote-mark {
+  position: absolute; inset-inline-start: 13px; top: -16px;
+  font-family: Georgia, "Times New Roman", serif; font-size: 44px; line-height: 1; font-style: normal;
+  color: var(--color-warm); opacity: .35;
+}
+.los__arc {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 3px 5px; margin: 14px 0 0;
+  font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase;
+}
+html[lang="ar"] .los__arc, html[lang="he"] .los__arc { letter-spacing: .03em; text-transform: none; font-size: 12px; }
+.los__arc-step { display: inline-flex; align-items: center; gap: 5px; color: var(--color-warm-stroke); transition: color 420ms ease; }
+.los__arc-step.is-on { color: var(--color-warm); }
+.los__arc-sep { color: var(--color-warm-stroke); opacity: .75; }
+
+/* right — the decision path */
+.los__path { position: relative; }
+.los__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: clamp(26px, 3.6vw, 50px); }
+.los__rail {
+  position: absolute; inset-inline-start: 6px; top: 10px; bottom: 10px; width: 2px;
+  background: var(--color-warm-stroke); border-radius: 2px; overflow: hidden;
+}
+.los__rail-fill {
+  display: block; position: absolute; inset: 0; transform-origin: top; transform: scaleY(0);
+  background: linear-gradient(180deg, var(--color-warm), rgba(184,115,51,.32));
+  box-shadow: 0 0 12px rgba(184,115,51,.35);
+}
+.los__row { position: relative; padding-inline-start: clamp(34px, 4.4vw, 48px); }
+/* the soft "principle note" card behind the active / hovered principle */
+.los__note {
+  position: absolute; inset-block: -16px; inset-inline-start: clamp(20px, 3.4vw, 34px); inset-inline-end: -20px;
+  border-radius: 16px; border: 1px solid transparent; background: rgba(255,255,255,.5);
+  box-shadow: 0 18px 44px -24px rgba(40,30,10,.28);
+  opacity: 0; transform: scale(.985);
+  transition: opacity 360ms ease, transform 360ms ease, border-color 360ms ease;
+  pointer-events: none;
+}
+.los__row:hover .los__note, .los__row--active .los__note { opacity: 1; transform: scale(1); border-color: var(--color-warm-stroke); }
+.los__node {
+  position: absolute; inset-inline-start: 0; top: 5px; width: 14px; height: 14px; border-radius: 50%;
+  display: grid; place-items: center; background: var(--color-warm-canvas);
+  box-shadow: 0 0 0 2px var(--color-warm-stroke) inset;
+  transition: box-shadow 420ms ease, transform 420ms ease, background 420ms ease;
+}
+.los__node-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--color-warm-stroke); transition: background 420ms ease; }
+.los__row--passed .los__node { box-shadow: 0 0 0 2px var(--color-warm) inset; background: var(--color-warm); }
+.los__row--passed .los__node-dot { background: var(--color-warm-canvas); }
+.los__row--active .los__node {
+  transform: scale(1.25); background: var(--color-warm);
+  box-shadow: 0 0 0 2px var(--color-warm) inset, 0 0 0 6px rgba(184,115,51,.14), 0 0 20px rgba(184,115,51,.4);
+  animation: los-pulse 2.8s ease-in-out infinite;
+}
+.los__row--active .los__node-dot { background: var(--color-warm-canvas); }
+@keyframes los-pulse {
+  0%, 100% { box-shadow: 0 0 0 2px var(--color-warm) inset, 0 0 0 6px rgba(184,115,51,.14), 0 0 18px rgba(184,115,51,.34); }
+  50%      { box-shadow: 0 0 0 2px var(--color-warm) inset, 0 0 0 9px rgba(184,115,51,.07), 0 0 26px rgba(184,115,51,.5); }
+}
+.los__row-body { position: relative; display: flex; flex-direction: column; gap: 7px; padding-block: 2px; transition: opacity 480ms ease; }
+.los__row--ahead  .los__row-body { opacity: .42; }
+.los__row--passed .los__row-body { opacity: .66; }
+.los__row--active .los__row-body { opacity: 1; }
+.los__row:hover .los__row-body { opacity: 1; }
+.los__row-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.los__n { font-size: 11px; letter-spacing: .14em; color: var(--color-warm); }
+html[lang="ar"] .los__n, html[lang="he"] .los__n { letter-spacing: 0; font-size: 13px; }
+.los__phase {
+  font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--color-warm-ink-muted);
+  padding: 2px 8px; border: 1px solid var(--color-warm-stroke); border-radius: var(--radius-pill);
+  transition: color 420ms ease, border-color 420ms ease, background 420ms ease;
+}
+html[lang="ar"] .los__phase, html[lang="he"] .los__phase { letter-spacing: 0; text-transform: none; font-size: 12px; }
+.los__row--active .los__phase { color: var(--color-warm-ink); border-color: var(--color-warm); background: var(--color-warm-soft); }
+.los__t { margin: 0; font-size: clamp(18px, 2.1vw, 23px); line-height: 1.2; font-weight: 600; color: var(--color-warm-ink); text-wrap: balance; }
+.los__d { margin: 0; font-size: clamp(13.5px, 1.4vw, 15px); line-height: 1.62; color: var(--color-warm-ink-muted); max-width: 52ch; text-wrap: pretty; }
+.los__count { font-size: 10px; letter-spacing: .14em; color: var(--color-warm-stroke); margin-top: 1px; }
+@media (max-width: 999px) {
+  .los__rail { inset-inline-start: 5px; }
+  .los__note { inset-inline-start: clamp(18px, 6vw, 30px); inset-inline-end: -14px; inset-block: -12px; }
+}
 
 /* ── Final CTA panel ── */
 .cta-panel {
@@ -2023,6 +2145,24 @@ html[lang="he"] .engine--v2 .engine__legend {
   .hero-identity:hover .hero-identity__photo img { transform: scale(1.02); }
   .hero-identity::after, .hero-identity:hover::after { animation: none !important; opacity: 0 !important; }
   .engine__pill { opacity: 1 !important; animation: none !important; }
-  .proj-motion-card { transform: none !important; opacity: 1 !important; filter: none !important; }
+  /* Coverflow rail → neutralised into a plain readable stack/grid even before its JS swaps in
+     the lite layout (covers the SSR / slow-hydration window). */
+  .proj-coverflow__viewport { height: auto; overflow: visible; cursor: default; -webkit-mask-image: none; mask-image: none; }
+  .proj-coverflow__stack { position: static; pointer-events: auto; }
+  .proj-coverflow__slot { position: static; display: block; perspective: none; }
+  .proj-coverflow-card { transform: none !important; opacity: 1 !important; filter: none !important; width: auto !important; min-height: 0; }
+  .proj-coverflow__static .proj-coverflow-card { margin: 0; }
+  .proj-coverflow__hint, .proj-coverflow__nav { display: none; }
+  .proj-coverflow__slot + .proj-coverflow__slot { margin-top: 14px; }
+  /* Leadership decision path → a plain, fully-lit list: rail filled, all principles bright, no
+     parallax/pulse/transitions, the "note" cards dropped. */
+  .los__paper { transform: none !important; }
+  .los__rail-fill { transform: scaleY(1) !important; }
+  .los__row-body, .los__node, .los__node-dot, .los__phase, .los__arc-step { transition: none !important; }
+  .los__node { animation: none !important; transform: none !important; background: var(--color-warm) !important; box-shadow: 0 0 0 2px var(--color-warm) inset !important; }
+  .los__node-dot { background: var(--color-warm-canvas) !important; }
+  .los__row-body { opacity: 1 !important; }
+  .los__note { display: none; }
+  .los__arc-step { color: var(--color-warm) !important; }
   .amap__card:hover, .amap__card:focus-visible { transform: none; }
 }

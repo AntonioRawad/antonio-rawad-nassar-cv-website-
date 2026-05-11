@@ -1,8 +1,17 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import useEmblaCarousel from "embla-carousel-react";
-import { motion, useReducedMotion } from "framer-motion";
+import {
+  motion,
+  useReducedMotion,
+  useMotionValue,
+  useSpring,
+  useTransform,
+  useMotionValueEvent,
+  useScroll,
+  useInView,
+  type MotionValue,
+} from "framer-motion";
 import { content, type Lang } from "@/lib/content";
 
 /* ─────────────────────────────────────────────────────────────────────────
@@ -826,170 +835,279 @@ function Projects({ lang }: { lang: Lang }) {
         ))}
       </div>
 
-      <ProjectMotionRail items={rest} valueLabel={k.value} lang={lang} />
+      <ProjectCoverflowRail items={rest} valueLabel={k.value} lang={lang} />
     </section>
   );
 }
 
-/* ─── Project Motion Rail — drag carousel: active card forward, others fog ─── */
+/* ─── Project Coverflow Rail — cursor-driven 3D rail: active card forward, side cards into fog ───
+   Desktop: moving the cursor across the stage scrubs a spring `progress` value (0…n-1); the card
+   nearest the centre becomes the readable hero. Pointer-drag works too (and is the touch path).
+   No scrollbar, no arrows-first interaction — a tiny ‹ › + progress hairline stay only for a11y.
+   `prefers-reduced-motion` (or no fine pointer) falls back to a plain, fully readable grid.       */
 type ProjItem = { i: string; name: string; role: string; challenge: string; value: string; tags: string[] };
 
-function ProjectMotionRail({ items, valueLabel, lang }: { items: ProjItem[]; valueLabel: string; lang: Lang }) {
-  const reduce = useReducedMotion();
-  const [emblaRef, embla] = useEmblaCarousel({
-    align: "center",
-    loop: false,
-    containScroll: "trimSnaps",
-    direction: RTL(lang) ? "rtl" : "ltr",
-    skipSnaps: false,
-    dragFree: false,
-  });
-  const [selected, setSelected] = useState(0);
-  const [canPrev, setCanPrev] = useState(false);
-  const [canNext, setCanNext] = useState(false);
-  const [dragging, setDragging] = useState(false);
+function ProjCardBody({ p, valueLabel }: { p: ProjItem; valueLabel: string }) {
+  return (
+    <>
+      <div className="proj-card__head">
+        <span className="proj-card__idx mono">{p.i}</span>
+        <h3 className="proj-card__name display-face">{p.name}</h3>
+        <p className="proj-card__role">{p.role}</p>
+      </div>
+      <p className="proj-card__challenge">{p.challenge}</p>
+      <div className="proj-card__value">
+        <span className="mono">{valueLabel.toUpperCase()}</span>
+        <p>{p.value}</p>
+      </div>
+      <div className="proj-card__tags">
+        {p.tags.slice(0, 2).map((tg, j) => (
+          <span key={j} className={"tag " + (j === 0 ? "tag--accent" : "tag--warm")}>
+            {tg}
+          </span>
+        ))}
+      </div>
+    </>
+  );
+}
 
-  const onSelect = useCallback(() => {
-    if (!embla) return;
-    setSelected(embla.selectedScrollSnap());
-    setCanPrev(embla.canScrollPrev());
-    setCanNext(embla.canScrollNext());
-  }, [embla]);
+function ProjectCoverflowRail({ items, valueLabel, lang }: { items: ProjItem[]; valueLabel: string; lang: Lang }) {
+  const reduce = useReducedMotion();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
+  const rtl = RTL(lang);
+  const dir = rtl ? -1 : 1;
+  const n = items.length;
+  const last = Math.max(0, n - 1);
+  const startIdx = Math.floor(last / 2);
+
+  const target = useMotionValue(startIdx);
+  const progress = useSpring(target, { stiffness: 90, damping: 20, mass: 0.6 });
+  const fillW = useTransform(progress, (v) => `${last ? (Math.max(0, Math.min(last, v)) / last) * 100 : 100}%`);
+
+  const [active, setActive] = useState(startIdx);
+  const [grabbing, setGrabbing] = useState(false);
+  const [interacted, setInteracted] = useState(false);
+  const [stageW, setStageW] = useState(1100);
+
+  const stageRef = useRef<HTMLDivElement>(null);
+  const drag = useRef({ on: false, x: 0, base: startIdx });
+
+  const lite = mounted && reduce === true;
+  const clamp = useCallback((v: number) => Math.max(0, Math.min(last, v)), [last]);
+  const setTarget = useCallback((v: number) => target.set(clamp(v)), [target, clamp]);
+  const markInteracted = useCallback(() => setInteracted(true), []);
+
+  useMotionValueEvent(progress, "change", (v) => {
+    const r = clamp(Math.round(v));
+    setActive((cur) => (cur === r ? cur : r));
+  });
 
   useEffect(() => {
-    if (!embla) return;
-    onSelect();
-    const onDown = () => setDragging(true);
-    const onUp = () => setDragging(false);
-    embla.on("select", onSelect);
-    embla.on("reInit", onSelect);
-    embla.on("pointerDown", onDown);
-    embla.on("pointerUp", onUp);
-    embla.on("settle", onUp);
-    return () => {
-      embla.off("select", onSelect);
-      embla.off("reInit", onSelect);
-      embla.off("pointerDown", onDown);
-      embla.off("pointerUp", onUp);
-      embla.off("settle", onUp);
-    };
-  }, [embla, onSelect]);
+    const el = stageRef.current;
+    if (!el || lite || typeof ResizeObserver === "undefined") return;
+    setStageW(el.getBoundingClientRect().width || 1100);
+    const ro = new ResizeObserver((entries) => {
+      const w = entries[0]?.contentRect.width;
+      if (w) setStageW(w);
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [lite]);
 
-  const scrollPrev = useCallback(() => {
-    embla?.scrollPrev();
-  }, [embla]);
-  const scrollNext = useCallback(() => {
-    embla?.scrollNext();
-  }, [embla]);
-  const scrollTo = useCallback(
-    (i: number) => {
-      embla?.scrollTo(i);
-    },
-    [embla]
-  );
+  const stepPx = Math.max(150, stageW * 0.2);
 
-  const onKeyDown = useCallback(
-    (e: React.KeyboardEvent) => {
-      if (e.key === "ArrowRight") {
-        e.preventDefault();
-        if (RTL(lang)) scrollPrev();
-        else scrollNext();
-      } else if (e.key === "ArrowLeft") {
-        e.preventDefault();
-        if (RTL(lang)) scrollNext();
-        else scrollPrev();
-      } else if (e.key === "Home") {
-        e.preventDefault();
-        scrollTo(0);
-      } else if (e.key === "End") {
-        e.preventDefault();
-        scrollTo(items.length - 1);
-      }
-    },
-    [lang, scrollPrev, scrollNext, scrollTo, items.length]
-  );
+  const endDrag = useCallback(() => {
+    if (!drag.current.on) return;
+    drag.current.on = false;
+    setGrabbing(false);
+    setTarget(Math.round(progress.get()));
+  }, [progress, setTarget]);
 
-  const stateFor = (i: number) => {
-    const d = Math.abs(i - selected);
-    if (reduce) return { scale: 1, opacity: 1, filter: "blur(0px)", y: 0 };
-    if (d === 0) return { scale: 1.055, opacity: 1, filter: "blur(0px)", y: -8 };
-    if (d === 1) return { scale: 0.945, opacity: 0.78, filter: "blur(1px)", y: 0 };
-    return { scale: 0.9, opacity: 0.45, filter: "blur(3px)", y: 0 };
+  const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (lite) return;
+    drag.current = { on: true, x: e.clientX, base: progress.get() };
+    setGrabbing(true);
+    markInteracted();
+    if (e.pointerType === "mouse") e.currentTarget.setPointerCapture?.(e.pointerId);
+  };
+  const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (lite) return;
+    if (drag.current.on) {
+      setTarget(drag.current.base - ((e.clientX - drag.current.x) / stepPx) * dir);
+      return;
+    }
+    if (e.pointerType !== "mouse") return;
+    const el = stageRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    let f = (e.clientX - rect.left) / Math.max(1, rect.width);
+    f = Math.max(0, Math.min(1, f));
+    if (rtl) f = 1 - f;
+    markInteracted();
+    setTarget(f * last);
+  };
+  const onPointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    endDrag();
+    e.currentTarget.releasePointerCapture?.(e.pointerId);
+  };
+  const onPointerLeave = () => {
+    if (lite || drag.current.on) return;
+    setTarget(Math.round(progress.get()));
+  };
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+      e.preventDefault();
+      markInteracted();
+      setTarget(Math.round(progress.get()) + 1);
+    } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+      e.preventDefault();
+      markInteracted();
+      setTarget(Math.round(progress.get()) - 1);
+    } else if (e.key === "Home") {
+      e.preventDefault();
+      setTarget(0);
+    } else if (e.key === "End") {
+      e.preventDefault();
+      setTarget(last);
+    }
+  };
+  const step = (delta: number) => {
+    markInteracted();
+    setTarget(Math.round(progress.get()) + delta);
   };
 
+  if (lite) {
+    return (
+      <div className="proj-coverflow proj-coverflow--lite">
+        <div className="proj-coverflow__static">
+          {items.map((p) => (
+            <article className="proj-card proj-coverflow-card" key={p.i}>
+              <ProjCardBody p={p} valueLabel={valueLabel} />
+            </article>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="proj-motion">
+    <div className="proj-coverflow">
       <div
-        className={"proj-motion__viewport" + (dragging ? " is-dragging" : "")}
-        ref={emblaRef}
+        className={"proj-coverflow__viewport" + (grabbing ? " is-grabbing" : "")}
+        ref={stageRef}
         tabIndex={0}
         role="group"
         aria-roledescription="carousel"
-        aria-label="Selected projects — drag, swipe, or use arrow keys"
+        aria-label="Selected projects — move the cursor across the rail, swipe, or use the arrow keys"
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
+        onPointerCancel={endDrag}
+        onPointerLeave={onPointerLeave}
         onKeyDown={onKeyDown}
       >
-        <div className="proj-motion__track">
-          {items.map((p, i) => {
-            const active = i === selected;
-            return (
-              <div
-                className="proj-motion__slide"
-                key={p.i}
-                role="group"
-                aria-roledescription="slide"
-                aria-label={`${i + 1} of ${items.length}: ${p.name}`}
-                aria-current={active ? "true" : undefined}
-              >
-                <motion.article
-                  className={"proj-motion-card" + (active ? " is-active" : "")}
-                  animate={stateFor(i)}
-                  transition={reduce ? { duration: 0 } : { type: "spring", stiffness: 240, damping: 32, mass: 0.7 }}
-                >
-                  <div className="proj-card__head">
-                    <span className="proj-card__idx mono">{p.i}</span>
-                    <h3 className="proj-card__name display-face">{p.name}</h3>
-                    <p className="proj-card__role">{p.role}</p>
-                  </div>
-                  <p className="proj-card__challenge">{p.challenge}</p>
-                  <div className="proj-card__value">
-                    <span className="mono">{valueLabel.toUpperCase()}</span>
-                    <p>{p.value}</p>
-                  </div>
-                  <div className="proj-card__tags">
-                    {p.tags.slice(0, 2).map((tg, j) => (
-                      <span key={j} className={"tag " + (j === 0 ? "tag--accent" : "tag--warm")}>
-                        {tg}
-                      </span>
-                    ))}
-                  </div>
-                </motion.article>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-      <div className="proj-motion__controls">
-        <button className="proj-motion__arrow" onClick={scrollPrev} disabled={!canPrev} aria-label="Previous project" type="button">
-          ‹
-        </button>
-        <div className="proj-motion__dots" role="tablist" aria-label="Project navigation">
+        <div className="proj-coverflow__stack">
           {items.map((p, i) => (
-            <button
+            <CoverflowCard
               key={p.i}
-              className="proj-motion__dot"
-              data-active={i === selected}
-              onClick={() => scrollTo(i)}
-              role="tab"
-              aria-selected={i === selected}
-              aria-label={`Go to project ${i + 1}`}
-              type="button"
+              p={p}
+              index={i}
+              count={n}
+              progress={progress}
+              valueLabel={valueLabel}
+              active={i === active}
+              dir={dir}
+              stageW={stageW}
             />
           ))}
         </div>
-        <button className="proj-motion__arrow" onClick={scrollNext} disabled={!canNext} aria-label="Next project" type="button">
+        <p className={"proj-coverflow__hint mono" + (interacted ? " is-hidden" : "")} aria-hidden="true">
+          ‹&nbsp;&nbsp;move&nbsp;cursor&nbsp;to&nbsp;explore&nbsp;&nbsp;›
+        </p>
+      </div>
+
+      <div className="proj-coverflow__nav">
+        <button className="proj-coverflow__arrow" type="button" aria-label="Previous project" onClick={() => step(-1)}>
+          ‹
+        </button>
+        <div className="proj-coverflow__track" aria-hidden="true">
+          <motion.div className="proj-coverflow__fill" style={{ width: fillW }} />
+        </div>
+        <button className="proj-coverflow__arrow" type="button" aria-label="Next project" onClick={() => step(1)}>
           ›
         </button>
+        <span className="proj-coverflow__count mono">
+          {String(active + 1).padStart(2, "0")} / {String(n).padStart(2, "0")}
+        </span>
       </div>
+    </div>
+  );
+}
+
+function CoverflowCard({
+  p,
+  index,
+  count,
+  progress,
+  valueLabel,
+  active,
+  dir,
+  stageW,
+}: {
+  p: ProjItem;
+  index: number;
+  count: number;
+  progress: MotionValue<number>;
+  valueLabel: string;
+  active: boolean;
+  dir: number;
+  stageW: number;
+}) {
+  const dist = useTransform(progress, (v) => index - v);
+  const mult = stageW >= 900 ? 0.32 : stageW >= 560 ? 0.4 : 0.5;
+  const near = Math.max(112, stageW * mult);
+  const far = near * 0.5;
+
+  const x = useTransform(dist, (d) => {
+    const a = Math.abs(d);
+    const s = Math.sign(d);
+    return (a <= 1 ? d * near : s * (near + (a - 1) * far)) * dir;
+  });
+  const scale = useTransform(dist, (d) => {
+    const a = Math.min(Math.abs(d), 2);
+    return a <= 1 ? 1.055 - 0.155 * a : 0.9 - 0.155 * (a - 1);
+  });
+  const opacity = useTransform(dist, (d) => {
+    const a = Math.abs(d);
+    if (a <= 1) return 1 - 0.34 * a;
+    if (a >= 2.5) return 0;
+    return Math.max(0, 0.66 - 0.4 * (a - 1));
+  });
+  const filter = useTransform(dist, (d) => {
+    const a = Math.abs(d);
+    const b = a <= 0.45 ? 0 : Math.min(8, (a - 0.45) * 5.4);
+    return b < 0.06 ? "none" : `blur(${b.toFixed(2)}px)`;
+  });
+  const rotateY = useTransform(dist, (d) => {
+    const c = Math.max(-2.2, Math.min(2.2, d));
+    return -c * 12 * dir;
+  });
+  const zIndex = useTransform(dist, (d) => 100 - Math.round(Math.min(Math.abs(d), 9) * 10));
+
+  return (
+    <div className="proj-coverflow__slot">
+      <motion.article
+        className={"proj-card proj-coverflow-card" + (active ? " is-active" : "")}
+        style={{ x, scale, opacity, filter, rotateY, zIndex }}
+        role="group"
+        aria-roledescription="slide"
+        aria-label={`Project ${index + 1} of ${count}: ${p.name}`}
+        aria-current={active ? "true" : undefined}
+      >
+        <ProjCardBody p={p} valueLabel={valueLabel} />
+      </motion.article>
     </div>
   );
 }
@@ -1197,24 +1315,118 @@ function Ecosystem({ lang }: { lang: Lang }) {
   );
 }
 
-/* ─── Leadership ─── */
-function Leadership({ lang }: { lang: Lang }) {
+/* ─── Leadership — "The Human Operating System": a calm decision path ───
+   The warm pause after the dark AI/strategy sections. Left: a sticky editorial intro that
+   frames the human layer (the "OS" label, the headline, a quote, and a phase arc that lights up
+   as you scroll). Right: a vertical decision path — a rail that draws as you scroll, six nodes
+   that activate when their principle crosses the viewport's centre band, the active principle on
+   a soft "note" card while the others are held quiet. Mobile = the same path, stacked.
+   prefers-reduced-motion → a plain, fully-lit list (the CSS media query neutralises the motion). */
+type LeadItem = { n: string; p: string; t: string; d: string };
+
+function LeadershipOperatingStyle({ lang }: { lang: Lang }) {
   const t = content.leadership[lang];
+  const reduce = useReducedMotion();
+  const n = t.items.length;
+
+  const sectionRef = useRef<HTMLElement>(null);
+  const pathRef = useRef<HTMLDivElement>(null);
+
+  // a whisper of parallax on the paper texture as the section travels through the viewport
+  const { scrollYProgress: bgProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
+  const paperY = useTransform(bgProgress, [0, 1], ["-3.5%", "3.5%"]);
+
+  // the rail "draws" from the first principle to the last as you scroll the path through
+  const { scrollYProgress: pathProgress } = useScroll({ target: pathRef, offset: ["start 78%", "end 42%"] });
+  const railScaleY = useSpring(pathProgress, { stiffness: 80, damping: 24, mass: 0.5 });
+
+  const [active, setActive] = useState(0);
+  const phases = t.items.map((it) => it.p);
+
   return (
-    <section className="section section--warm">
-      <div className="shell">
-        <SectionHead kicker={t.kicker} title={t.title} lead={t.lead} />
-        <div className="manifesto">
-          {t.items.map((it, i) => (
-            <Reveal key={i} delay={i * 80} as="div" className="manifesto__p">
-              <span className="manifesto__n mono">— {it.n}</span>
-              <h3 className="manifesto__t display-face">{it.t}</h3>
-              <p className="manifesto__d">{it.d}</p>
-            </Reveal>
-          ))}
+    <section className="section section--warm los" ref={sectionRef}>
+      <motion.div className="los__paper" aria-hidden="true" style={{ y: reduce ? 0 : paperY }} />
+      <div className="shell los__grid">
+        <div className="los__intro">
+          <span className="los__kicker mono">{t.kicker}</span>
+          <p className="los__os display-face">{t.os}</p>
+          <h2 className="los__headline display-face">{t.title}</h2>
+          <p className="los__lead">{t.lead}</p>
+          <blockquote className="los__quote">
+            <span className="los__quote-mark" aria-hidden="true">&ldquo;</span>
+            <span>{t.quote}</span>
+          </blockquote>
+          <p className="los__arc mono" aria-hidden="true">
+            {phases.map((ph, i) => (
+              <span key={i} className={"los__arc-step" + (i <= active ? " is-on" : "")}>
+                {ph}
+                {i < phases.length - 1 ? <span className="los__arc-sep">·</span> : null}
+              </span>
+            ))}
+          </p>
+        </div>
+
+        <div className="los__path" ref={pathRef}>
+          <span className="los__rail" aria-hidden="true">
+            <motion.span className="los__rail-fill" style={{ scaleY: reduce ? 1 : railScaleY, originY: 0 }} />
+          </span>
+          <ol className="los__list">
+            {t.items.map((it, i) => (
+              <PrincipleRow
+                key={it.n}
+                it={it}
+                index={i}
+                count={n}
+                state={i === active ? "active" : i < active ? "passed" : "ahead"}
+                onEnter={() => setActive(i)}
+              />
+            ))}
+          </ol>
         </div>
       </div>
     </section>
+  );
+}
+
+function PrincipleRow({
+  it,
+  index,
+  count,
+  state,
+  onEnter,
+}: {
+  it: LeadItem;
+  index: number;
+  count: number;
+  state: "active" | "passed" | "ahead";
+  onEnter: () => void;
+}) {
+  const ref = useRef<HTMLLIElement>(null);
+  const inView = useInView(ref, { margin: "-46% 0px -46% 0px" });
+  const wasInView = useRef(false);
+  useEffect(() => {
+    if (inView && !wasInView.current) onEnter();
+    wasInView.current = inView;
+  }, [inView, onEnter]);
+
+  return (
+    <li ref={ref} className={"los__row los__row--" + state} aria-current={state === "active" ? "true" : undefined}>
+      <span className="los__note" aria-hidden="true" />
+      <span className="los__node" aria-hidden="true">
+        <span className="los__node-dot" />
+      </span>
+      <div className="los__row-body">
+        <div className="los__row-head">
+          <span className="los__n mono">{it.n}</span>
+          <span className="los__phase mono">{it.p}</span>
+        </div>
+        <h3 className="los__t display-face">{it.t}</h3>
+        <p className="los__d">{it.d}</p>
+        <span className="los__count mono" aria-hidden="true">
+          {index + 1} / {count}
+        </span>
+      </div>
+    </li>
   );
 }
 
@@ -1349,7 +1561,7 @@ export default function Page() {
         <Audiences lang={lang} />
         <Timeline lang={lang} />
         <Ecosystem lang={lang} />
-        <Leadership lang={lang} />
+        <LeadershipOperatingStyle lang={lang} />
         <FinalCta lang={lang} />
       </main>
       <Footer lang={lang} />
