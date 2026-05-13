@@ -1497,61 +1497,101 @@ html[lang="ar"] .arc__phase-title .mono, html[lang="he"] .arc__phase-title .mono
 .eco__stage svg { width: 100%; height: 100%; }
 .eco__spoke { transition: stroke 320ms ease, stroke-width 320ms ease; }
 
-.eco__panel { display: flex; flex-direction: column; gap: 18px; }
-.eco__tabs { display: grid; gap: 6px; grid-template-columns: repeat(2, 1fr); }
-@media (min-width: 640px) { .eco__tabs { grid-template-columns: repeat(3, 1fr); } }
-.eco__tab {
-  appearance: none; cursor: pointer; text-align: start;
-  display: flex; flex-direction: column; gap: 4px;
-  padding: 12px 14px;
-  background: var(--color-canvas-raised); color: var(--color-text-secondary);
-  border: 1px solid var(--color-stroke); border-radius: var(--radius-md);
-  font-family: inherit; font-size: 13px; font-weight: 500; line-height: 1.25;
-  transition: all 240ms ease;
-}
-.eco__tab .mono { font-size: 10px; letter-spacing: .12em; color: var(--color-text-muted); }
-.eco__tab:hover { color: var(--color-text-primary); border-color: var(--color-stroke-strong); }
-.eco__tab.is-active {
-  color: var(--color-accent); border-color: var(--color-accent-dim);
-  background:
-    linear-gradient(160deg, rgba(0,255,255,.08), transparent 60%),
-    var(--color-canvas-raised);
-  box-shadow: 0 0 24px rgba(0,255,255,.08);
-}
-.eco__tab.is-active .mono { color: var(--color-accent); }
+.eco__panel { display: flex; flex-direction: column; gap: 16px; }
 
-.eco__detail {
-  padding: 24px;
-  border: 1px solid var(--color-stroke); border-radius: var(--radius-lg);
-  background:
-    radial-gradient(500px 280px at 100% 0%, rgba(0,255,255,.10), transparent 55%),
-    var(--color-canvas-raised);
-  display: flex; flex-direction: column; gap: 16px;
-  min-height: 220px;
+/* Icon tile grid — capability cards, not text tabs */
+.eco__tiles {
+  display: grid; gap: 10px;
+  grid-template-columns: repeat(2, 1fr);
 }
-.eco__h { font-size: 14px; line-height: 1.55; color: var(--color-text-primary); margin: 0; }
-.eco__chips { display: flex; flex-wrap: wrap; gap: 6px; }
+@media (min-width: 520px) { .eco__tiles { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 880px) { .eco__tiles { grid-template-columns: repeat(4, 1fr); } }
+.eco__tile {
+  appearance: none; cursor: pointer; text-align: center;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+  padding: 18px 12px;
+  min-height: 108px;
+  background:
+    radial-gradient(120% 100% at 50% 0%, rgba(0, 255, 255, 0.05), transparent 65%),
+    var(--color-canvas-raised);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-stroke); border-radius: var(--radius-lg);
+  font-family: inherit; font-size: 12.5px; font-weight: 500; line-height: 1.3;
+  transition:
+    color 240ms var(--ease-out),
+    border-color 240ms var(--ease-out),
+    background 240ms var(--ease-out),
+    transform 240ms var(--ease-out),
+    box-shadow 240ms var(--ease-out);
+}
+.eco__tile-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px;
+  color: var(--color-text-secondary);
+  transition: color 240ms var(--ease-out), transform 360ms var(--ease-out);
+}
+.eco__tile-icon svg { width: 28px; height: 28px; display: block; }
+.eco__tile-name {
+  display: block; font-size: 12.5px; letter-spacing: 0.005em;
+  color: inherit;
+}
+html[lang="ar"] .eco__tile-name, html[lang="he"] .eco__tile-name { font-size: 13.5px; letter-spacing: 0; }
+
+.eco__tile:hover {
+  color: var(--color-text-primary);
+  border-color: var(--color-stroke-strong);
+  transform: translateY(-2px);
+}
+.eco__tile:hover .eco__tile-icon { color: var(--color-text-primary); }
+.eco__tile.is-active {
+  color: var(--color-accent);
+  border-color: var(--color-accent-dim);
+  background:
+    radial-gradient(120% 100% at 50% 0%, rgba(0, 255, 255, 0.18), transparent 60%),
+    var(--color-canvas-raised);
+  box-shadow: 0 0 28px rgba(0, 255, 255, 0.10), inset 0 0 0 1px rgba(0, 255, 255, 0.10);
+  transform: translateY(-2px);
+}
+.eco__tile.is-active .eco__tile-icon { color: var(--color-accent); }
+
+/* Compact detail strip below the tiles */
+.eco__strip {
+  padding: 18px 22px;
+  border: 1px solid var(--color-stroke);
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(420px 200px at 100% 0%, rgba(0, 255, 255, 0.08), transparent 60%),
+    var(--color-canvas-raised);
+  display: flex; flex-direction: column; gap: 14px;
+}
+.eco__strip-h {
+  font-size: 14px; line-height: 1.55; color: var(--color-text-primary); margin: 0;
+}
+.eco__strip-row {
+  display: flex; flex-wrap: wrap; align-items: center;
+  gap: 12px 18px; justify-content: space-between;
+}
+.eco__strip-chips { display: flex; flex-wrap: wrap; gap: 6px; flex: 1; min-width: 0; }
 .eco__chip {
-  padding: 6px 12px;
+  padding: 5px 11px;
   border: 1px solid var(--color-stroke);
   border-radius: var(--radius-pill);
   background: var(--color-canvas-sunken);
-  font-size: 12px; color: var(--color-text-primary);
+  font-size: 11.5px; color: var(--color-text-primary);
   font-family: var(--font-mono); letter-spacing: .02em;
-  animation: chip-in 380ms cubic-bezier(.16,1,.3,1) backwards;
   transition: all 220ms ease;
 }
-html[lang="ar"] .eco__chip, html[lang="he"] .eco__chip { font-family: inherit; font-size: 13px; }
-.eco__chip:hover { color: var(--color-accent); border-color: var(--color-accent-dim); transform: translateY(-1px); }
-@keyframes chip-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.eco__chip--more { color: var(--color-text-muted); border-style: dashed; }
+html[lang="ar"] .eco__chip, html[lang="he"] .eco__chip { font-family: inherit; font-size: 12.5px; }
 
 .eco__cta {
-  align-self: flex-start;
+  flex: 0 0 auto;
   color: var(--color-accent); text-decoration: none;
   font-family: var(--font-mono); font-size: 12px; letter-spacing: .04em;
   padding: 8px 14px; border: 1px solid var(--color-accent-dim);
   border-radius: var(--radius-pill);
-  transition: all 240ms ease; margin-top: auto;
+  transition: all 240ms ease;
+  white-space: nowrap;
 }
 .eco__cta:hover { background: rgba(0,255,255,.08); transform: translateX(3px); box-shadow: 0 0 22px rgba(0,255,255,.18); }
 html[dir="rtl"] .eco__cta:hover { transform: translateX(-3px); }
