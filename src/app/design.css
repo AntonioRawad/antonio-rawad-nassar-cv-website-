@@ -10,10 +10,10 @@
 /* RTL-native typography overrides — Arabic + Hebrew get premium native faces,
    relaxed line-height, no English-style tracking or uppercase, larger sizes. */
 :root {
-  --font-arabic-native: 'IBM Plex Sans Arabic', 'Noto Sans Arabic', 'Cairo', 'Tajawal', system-ui, sans-serif;
-  --font-arabic-display: 'IBM Plex Sans Arabic', 'Cairo', 'Tajawal', system-ui, sans-serif;
-  --font-hebrew-native: 'Noto Sans Hebrew', 'Assistant', 'Heebo', system-ui, sans-serif;
-  --font-hebrew-display: 'Assistant', 'Noto Sans Hebrew', 'Frank Ruhl Libre', system-ui, sans-serif;
+  --font-arabic-native: var(--font-plex-arabic), 'Cairo', system-ui, sans-serif;
+  --font-arabic-display: var(--font-plex-arabic), 'Cairo', system-ui, sans-serif;
+  --font-hebrew-native: var(--font-heebo), system-ui, sans-serif;
+  --font-hebrew-display: var(--font-heebo), system-ui, sans-serif;
 }
 html[lang="ar"], html[lang="ar"] body {
   font-family: var(--font-arabic-native);
@@ -77,8 +77,8 @@ html[dir="rtl"] .engine-label--out { text-anchor: end; }
   --pf-display-3: clamp(24px, 2.6vw, 36px);
   --pf-lead:      clamp(17px, 1.3vw, 21px);
 
-  --font-hebrew:  'Frank Ruhl Libre', 'Heebo', 'Cairo', system-ui, serif;
-  --font-hebrew-body: 'Heebo', system-ui, sans-serif;
+  --font-hebrew:  var(--font-heebo), 'Cairo', system-ui, sans-serif;
+  --font-hebrew-body: var(--font-heebo), system-ui, sans-serif;
 
   /* Warm light surface — used for the "warm light section" the brief
      calls for. Sand/ivory derived to coexist with copper accent. */
@@ -2282,7 +2282,7 @@ html[lang="he"] .engine--v2 .engine__legend {
 .sig__eyebrow-en  { color: var(--color-text-muted); }
 .sig__eyebrow-sep { color: var(--color-stroke-strong); opacity: 0.6; letter-spacing: 0; }
 .sig__eyebrow-ar {
-  font-family: 'IBM Plex Sans Arabic', var(--font-arabic);
+  font-family: var(--font-plex-arabic), var(--font-arabic);
   letter-spacing: 0;
   text-transform: none;
   font-size: 12px;
@@ -2291,7 +2291,7 @@ html[lang="he"] .engine--v2 .engine__legend {
 
 /* 2 — Handwritten script (Caveat, gradient text fill) */
 .sig__hand {
-  font-family: 'Caveat', cursive;
+  font-family: var(--font-caveat), 'Caveat', cursive;
   font-weight: 600;
   font-size: clamp(48px, 6vw, 84px);
   line-height: 1;
@@ -2338,7 +2338,7 @@ html[dir="rtl"] .sig__rule,
   letter-spacing: -0.01em;
 }
 .sig__name-ar {
-  font-family: 'IBM Plex Sans Arabic', var(--font-arabic);
+  font-family: var(--font-plex-arabic), var(--font-arabic);
   font-weight: 700;
   letter-spacing: 0;
   color: var(--color-text-primary);

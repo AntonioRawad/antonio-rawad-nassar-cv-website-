@@ -121,9 +121,9 @@
 
   /* ───── 3. TYPOGRAPHY ──────────────────────────────────────────── */
 
-  --font-sans:    'Outfit', system-ui, -apple-system, sans-serif;
+  --font-sans:    var(--font-outfit), system-ui, -apple-system, sans-serif;
   --font-mono:    'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
-  --font-arabic:  'Cairo', system-ui, sans-serif;
+  --font-arabic:  var(--font-plex-arabic), 'Cairo', system-ui, sans-serif;
 
   /* Scale (operator density — no display sizes >32px) */
   --text-display:  32px;   --leading-display: 40px;

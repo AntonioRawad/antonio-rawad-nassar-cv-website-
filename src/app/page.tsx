@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
+import Image from "next/image";
 import {
   motion,
   useReducedMotion,
@@ -357,8 +358,14 @@ function HeroIdentityPanel({ lang }: { lang: Lang }) {
     <div className="hero-identity">
       <div className="hero-identity__rim" aria-hidden="true" />
       <div className="hero-identity__photo">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/assets/antonio-portrait.png" alt="Antonio Rawad Nassar — C-Level Strategy & AI Transformation Advisor" loading="eager" />
+        <Image
+          src="/assets/antonio-portrait.png"
+          alt="Antonio Rawad Nassar — C-Level Strategy & AI Transformation Advisor"
+          width={480}
+          height={480}
+          priority
+          sizes="(max-width: 720px) 60vw, 280px"
+        />
         <div className="hero-identity__photo-grad" aria-hidden="true" />
         <div className="hero-identity__photo-edge hero-identity__photo-edge--cyan" aria-hidden="true" />
         <div className="hero-identity__photo-edge hero-identity__photo-edge--warm" aria-hidden="true" />
