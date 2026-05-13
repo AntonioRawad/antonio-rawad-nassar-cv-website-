@@ -162,20 +162,71 @@ html[dir="rtl"] .mirror-flip { transform: scaleX(-1); }
   display: flex; align-items: center; gap: var(--space-6);
   height: 64px;
 }
+/* ─── Brand lockup (RN monogram + name + tagline)
+       Spec: design_handoff_brand_and_signature/brand-mark.css ─── */
 .nav__brand {
-  display: flex; align-items: center; gap: var(--space-3);
-  font-weight: 600; letter-spacing: -0.01em;
-  white-space: nowrap;
-  color: var(--color-text-primary);
+  display: inline-flex; align-items: center; gap: 12px;
   text-decoration: none;
+  color: inherit;
 }
 .nav__brand-mark {
-  width: 28px; height: 28px;
-  display: grid; place-items: center;
-  border-radius: var(--radius-md);
-  background: linear-gradient(140deg, var(--color-accent-dim), var(--color-warm));
-  color: var(--color-canvas);
-  font-family: var(--font-mono); font-weight: 700; font-size: 13px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: none;
+  width: auto; height: auto;
+  padding: 0; border-radius: 0;
+  font-size: inherit;
+}
+.nav__brand-text {
+  display: inline-flex; flex-direction: column;
+  line-height: 1.1; min-width: 0;
+}
+.nav__brand-name {
+  font-family: var(--font-sans);
+  font-size: 14px; font-weight: 600;
+  color: var(--color-text-primary);
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+}
+.nav__brand-tagline {
+  font-family: var(--font-mono);
+  font-size: 9px; font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+html[lang="ar"] .nav__brand-tagline,
+html[lang="he"] .nav__brand-tagline {
+  font-family: inherit;
+  letter-spacing: 0;
+  text-transform: none;
+  font-size: 11px;
+}
+@media (max-width: 640px) { .nav__brand-text { display: none; } }
+
+/* RN logo SVG */
+.rn-logo {
+  display: block;
+  overflow: visible;
+  transition: filter 360ms ease, transform 360ms var(--ease-out);
+}
+.rn-logo__sheen {
+  transform: translateX(-100%);
+  transition: transform 1000ms cubic-bezier(.4, 0, .2, 1);
+  pointer-events: none;
+}
+.nav__brand:hover .rn-logo {
+  filter:
+    drop-shadow(0 8px 22px rgba(123, 107, 255, 0.55))
+    drop-shadow(0 2px 10px rgba(0, 255, 255, 0.25));
+  transform: translateY(-1px);
+}
+.nav__brand:hover .rn-logo__sheen { transform: translateX(100%); }
+@media (prefers-reduced-motion: reduce) {
+  .rn-logo, .rn-logo__sheen {
+    transition: none !important;
+    animation: none !important;
+  }
 }
 .nav__links {
   display: none;
@@ -2165,4 +2216,186 @@ html[lang="he"] .engine--v2 .engine__legend {
   .los__note { display: none; }
   .los__arc-step { color: var(--color-warm) !important; }
   .amap__card:hover, .amap__card:focus-visible { transform: none; }
+}
+
+/* ═════════════════════════════════════════════════════════════
+   SignatureBlock — executive sign-off card.
+   Spec: design_handoff_brand_and_signature/signature-block.css.
+   ═════════════════════════════════════════════════════════════ */
+
+@keyframes sig-fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.sig {
+  --sig-accent: #B36BFF;
+
+  padding: clamp(24px, 3.5vw, 40px) clamp(22px, 3.5vw, 44px);
+  border: 1px solid var(--color-stroke);
+  border-radius: 20px;
+  background:
+    radial-gradient(140% 100% at 0% 0%,   rgba(123, 107, 255, 0.06), transparent 55%),
+    radial-gradient(140% 100% at 100% 100%, rgba(0, 255, 255, 0.04),   transparent 55%),
+    linear-gradient(170deg, #0B121C, #06090F 70%);
+
+  display: grid;
+  gap: 14px;
+  text-align: start;
+  position: relative;
+  isolation: isolate;
+
+  opacity: 0;
+  animation: sig-fade-up 700ms var(--ease-out) 200ms forwards;
+}
+
+/* Gradient hairline border via mask-composite (violet → cyan → copper) */
+.sig::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg,
+    rgba(123, 107, 255, 0.25),
+    rgba(0, 255, 255, 0.12) 50%,
+    rgba(184, 115, 51, 0.15)
+  );
+  z-index: -1;
+  padding: 1px;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* 1 — Eyebrow row: SIGNATURE · توقيع */
+.sig__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+.sig__eyebrow-en  { color: var(--color-text-muted); }
+.sig__eyebrow-sep { color: var(--color-stroke-strong); opacity: 0.6; letter-spacing: 0; }
+.sig__eyebrow-ar {
+  font-family: 'IBM Plex Sans Arabic', var(--font-arabic);
+  letter-spacing: 0;
+  text-transform: none;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+/* 2 — Handwritten script (Caveat, gradient text fill) */
+.sig__hand {
+  font-family: 'Caveat', cursive;
+  font-weight: 600;
+  font-size: clamp(48px, 6vw, 84px);
+  line-height: 1;
+  color: var(--color-text-primary);
+  background: linear-gradient(135deg, #E8ECF2 0%, #B36BFF 60%, #00FFFF 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+  padding-block: 6px;
+  letter-spacing: -0.005em;
+  position: relative;
+}
+
+/* 3 — Hairline rule */
+.sig__rule {
+  height: 1px;
+  background: linear-gradient(90deg,
+    rgba(0, 255, 255, 0.5),
+    rgba(123, 107, 255, 0.45) 50%,
+    rgba(184, 115, 51, 0.35)
+  );
+  width: clamp(180px, 36%, 360px);
+  margin-block: 2px 8px;
+}
+html[dir="rtl"] .sig__rule,
+[dir="rtl"] .sig__rule {
+  background: linear-gradient(270deg,
+    rgba(0, 255, 255, 0.5),
+    rgba(123, 107, 255, 0.45) 50%,
+    rgba(184, 115, 51, 0.35)
+  );
+}
+
+/* 4 — Name row (EN · AR) */
+.sig__name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px;
+  font-family: var(--font-sans);
+  font-size: clamp(17px, 1.8vw, 22px);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  letter-spacing: -0.01em;
+}
+.sig__name-ar {
+  font-family: 'IBM Plex Sans Arabic', var(--font-arabic);
+  font-weight: 700;
+  letter-spacing: 0;
+  color: var(--color-text-primary);
+}
+.sig__name-sep { color: var(--color-stroke-strong); font-weight: 400; }
+
+/* 5 — Role line */
+.sig__role {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  letter-spacing: 0.01em;
+}
+html[lang="ar"] .sig__role,
+html[lang="he"] .sig__role {
+  font-size: 14px;
+  letter-spacing: 0;
+}
+
+/* 6 — FIKRA AI pill CTA */
+.sig__brand {
+  align-self: flex-start;
+  margin-top: 8px;
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  text-decoration: none;
+  padding: 8px 14px;
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  border-radius: 999px;
+  background: rgba(0, 255, 255, 0.04);
+  transition: all 320ms var(--ease-out);
+  position: relative;
+  overflow: hidden;
+}
+.sig__brand::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.18), transparent);
+  transform: translateX(-100%);
+  transition: transform 600ms ease;
+}
+.sig__brand:hover {
+  border-color: rgba(0, 255, 255, 0.6);
+  background: rgba(0, 255, 255, 0.08);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px -8px rgba(0, 255, 255, 0.5);
+}
+.sig__brand:hover::after { transform: translateX(100%); }
+html[lang="ar"] .sig__brand,
+html[lang="he"] .sig__brand { letter-spacing: 0.14em; }
+
+@media (prefers-reduced-motion: reduce) {
+  .sig { opacity: 1 !important; animation: none !important; }
+  .sig__brand::after { transition: none !important; animation: none !important; }
 }

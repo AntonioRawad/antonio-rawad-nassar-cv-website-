@@ -24,6 +24,51 @@ const SOC = content.social.links;
 
 const RTL = (lang: Lang) => lang === "ar" || lang === "he";
 
+/* ─── RN Monogram — angular R interlocking with N, on a dark card
+       with a cyan→violet→magenta stroke gradient and hover sheen.
+       Ported from the design handoff (design_handoff_brand_and_signature). ─── */
+function RNLogo({ size = 26 }: { size?: number }) {
+  const id = "rn-logo";
+  return (
+    <svg viewBox="0 0 100 68" width={size * 1.47} height={size} aria-hidden="true" className="rn-logo">
+      <defs>
+        <radialGradient id={`bg-${id}`} cx="0.15" cy="0.1" r="1.1">
+          <stop offset="0%" stopColor="#1A2240" />
+          <stop offset="55%" stopColor="#0A0F1F" />
+          <stop offset="100%" stopColor="#04070D" />
+        </radialGradient>
+        <linearGradient id={`st-${id}`} x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#5DA9FF" />
+          <stop offset="40%" stopColor="#7B6BFF" />
+          <stop offset="100%" stopColor="#B36BFF" />
+        </linearGradient>
+        <linearGradient id={`sh-${id}`} x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0" />
+          <stop offset="50%" stopColor="#FFFFFF" stopOpacity=".45" />
+          <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0" />
+        </linearGradient>
+        <linearGradient id={`hi-${id}`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.18" />
+          <stop offset="40%" stopColor="#FFFFFF" stopOpacity="0" />
+        </linearGradient>
+      </defs>
+      <rect x="0.75" y="0.75" width="98.5" height="66.5" rx="9" fill={`url(#bg-${id})`} />
+      <rect x="0.75" y="0.75" width="98.5" height="66.5" rx="9" fill={`url(#hi-${id})`} opacity="0.8" />
+      <rect x="0.75" y="0.75" width="98.5" height="66.5" rx="9" fill="none" stroke="rgba(123,107,255,0.18)" strokeWidth="1" />
+      <g fill="none" stroke={`url(#st-${id})`} strokeWidth="5.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M 16 50 L 16 18" />
+        <path d="M 16 18 L 36 18 L 42 25 L 36 32 L 22 32" />
+        <path d="M 28 32 L 44 50" />
+        <path d="M 54 50 L 54 18" />
+        <path d="M 54 18 L 80 50" />
+        <path d="M 80 50 L 80 18" />
+      </g>
+      <ellipse cx="50" cy="38" rx="36" ry="14" fill="rgba(123,107,255,0.10)" filter="blur(8px)" opacity="0.7" />
+      <rect x="0" y="0" width="100" height="68" rx="9" fill={`url(#sh-${id})`} className="rn-logo__sheen" />
+    </svg>
+  );
+}
+
 /* ─── Social icons (single-stroke, Lucide-style) ─── */
 function SocIcon({ k }: { k: string }) {
   const p = {
@@ -445,6 +490,7 @@ function ClarityEngine({
 /* ─── Nav ─── */
 function Nav({ lang, setLang, onMenuOpen }: { lang: Lang; setLang: (l: Lang) => void; onMenuOpen: () => void }) {
   const c = content.nav[lang];
+  const b = content.brand[lang];
   const lbl = content.social.labels[lang];
   const items: [string, string][] = [
     ["#home", c.home],
@@ -457,9 +503,12 @@ function Nav({ lang, setLang, onMenuOpen }: { lang: Lang; setLang: (l: Lang) => 
   return (
     <header className="nav">
       <div className="shell nav__inner">
-        <a className="nav__brand" href="#home">
-          <span className="nav__brand-mark">A·</span>
-          <span>Antonio Rawad Nassar</span>
+        <a className="nav__brand" href="#home" aria-label={`${b.name} — ${c.home}`}>
+          <span className="nav__brand-mark"><RNLogo size={26} /></span>
+          <span className="nav__brand-text">
+            <span className="nav__brand-name">{b.name}</span>
+            <span className="nav__brand-tagline">{b.tagline}</span>
+          </span>
         </a>
         <nav className="nav__links" aria-label="Primary">
           {items.map(([h, label]) => (
@@ -496,7 +545,7 @@ function Nav({ lang, setLang, onMenuOpen }: { lang: Lang; setLang: (l: Lang) => 
             </button>
           ))}
         </div>
-        <a className="nav__cta" href="#contact">
+        <a className="nav__cta" href={SOC.calendly} target="_blank" rel="noopener noreferrer">
           {c.book}
         </a>
         <button className="nav__menu-btn" onClick={onMenuOpen} aria-label={c.menu}>
@@ -622,7 +671,7 @@ function Hero({ lang }: { lang: Lang }) {
           </h1>
           <p className="hero__sub">{t.sub}</p>
           <div className="hero__ctas">
-            <a className="btn btn--primary" href="#contact">
+            <a className="btn btn--primary" href={SOC.calendly} target="_blank" rel="noopener noreferrer">
               {t.ctaPrimary}
               <span className="btn__arrow">→</span>
             </a>
@@ -1453,7 +1502,7 @@ function FinalCta({ lang }: { lang: Lang }) {
             <h2 className="display-face">{t.title}</h2>
             <p>{t.body}</p>
             <div className="hero__ctas" style={{ marginTop: 22 }}>
-              <a className="btn btn--primary" href={SOC.emailPrimary}>
+              <a className="btn btn--primary" href={SOC.calendly} target="_blank" rel="noopener noreferrer">
                 {t.ctaPrimary}
                 <span className="btn__arrow">→</span>
               </a>
@@ -1481,6 +1530,34 @@ function FinalCta({ lang }: { lang: Lang }) {
   );
 }
 
+/* ─── Signature Block — executive sign-off card
+       Ported from the design handoff (design_handoff_brand_and_signature).
+       Embedded inline in the Footer's brand column. ─── */
+function SignatureBlock({ lang }: { lang: Lang }) {
+  const s = content.signature[lang];
+  const dir = RTL(lang) ? "rtl" : "ltr";
+  return (
+    <div className="sig" dir={dir} aria-label={s.eyebrowEn}>
+      <div className="sig__eyebrow">
+        <span className="sig__eyebrow-en">{s.eyebrowEn}</span>
+        <span className="sig__eyebrow-sep" aria-hidden="true">·</span>
+        <span className="sig__eyebrow-ar">{s.eyebrowAr}</span>
+      </div>
+      <div className="sig__hand" aria-hidden="true">{s.scriptName}</div>
+      <div className="sig__rule" aria-hidden="true" />
+      <div className="sig__name">
+        <span className="sig__name-en">{s.nameEn}</span>
+        <span className="sig__name-sep" aria-hidden="true">·</span>
+        <span className="sig__name-ar">{s.nameAr}</span>
+      </div>
+      <div className="sig__role">{s.role}</div>
+      <a className="sig__brand" href={SOC.fikraWebsite} target="_blank" rel="noopener noreferrer">
+        {s.brandLabel}
+      </a>
+    </div>
+  );
+}
+
 /* ─── Footer ─── */
 function Footer({ lang }: { lang: Lang }) {
   const t = content.footer[lang];
@@ -1489,9 +1566,7 @@ function Footer({ lang }: { lang: Lang }) {
     <footer className="footer">
       <div className="shell footer__grid">
         <div className="footer__brand">
-          <div className="footer__name">Antonio Rawad Nassar</div>
-          <p className="footer__role">C-Level Strategy &amp; AI Transformation Advisor</p>
-          <p className="footer__loc">{t.line}</p>
+          <SignatureBlock lang={lang} />
         </div>
         <div className="footer__col">
           <h4 className="mono">Connect</h4>

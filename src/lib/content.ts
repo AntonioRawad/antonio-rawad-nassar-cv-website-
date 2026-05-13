@@ -39,6 +39,12 @@ export const content = {
     he: { home: "בית", about: "אודות", advisory: "ייעוץ", projects: "פרויקטים", ai: "טרנספורמציה בבינה מלאכותית", finance: "אסטרטגיה ופיננסים", arch: "ארכיטקטורה עסקית", edu: "חינוך", timeline: "ציר זמן", contact: "יצירת קשר", book: "קביעת שיחה", menu: "תפריט" }
   },
 
+  brand: {
+    en: { name: "Antonio Rawad Nassar", tagline: "Strategy · AI · Finance" },
+    ar: { name: "Antonio Rawad Nassar", tagline: "استراتيجية · ذكاء اصطناعي · مالية" },
+    he: { name: "Antonio Rawad Nassar", tagline: "אסטרטגיה · בינה מלאכותית · פיננסים" }
+  },
+
   hero: {
     en: {
       name: "Antonio Rawad Nassar",
@@ -684,6 +690,36 @@ export const content = {
     he: { line: "אנטוניו רוואד נסאר · ישראל · ייעוץ רב-לשוני: AR · EN · HE · IT", note: "© 2026 · ממורכבות לבהירות." }
   },
 
+  signature: {
+    en: {
+      eyebrowEn: "SIGNATURE",
+      eyebrowAr: "توقيع",
+      scriptName: "Antonio Nassar",
+      nameEn: "Antonio Rawad Nassar",
+      nameAr: "أنطونيو رواد نصّار",
+      role: "Founder & Product Owner · Fikra AI",
+      brandLabel: "FIKRA AI"
+    },
+    ar: {
+      eyebrowEn: "SIGNATURE",
+      eyebrowAr: "توقيع",
+      scriptName: "Antonio Nassar",
+      nameEn: "Antonio Rawad Nassar",
+      nameAr: "أنطونيو رواد نصّار",
+      role: "المؤسّس ومالك المنتج · Fikra AI",
+      brandLabel: "FIKRA AI"
+    },
+    he: {
+      eyebrowEn: "SIGNATURE",
+      eyebrowAr: "توقيع",
+      scriptName: "Antonio Nassar",
+      nameEn: "Antonio Rawad Nassar",
+      nameAr: "أنطونيو رواد نصّار",
+      role: "מייסד ובעלי המוצר · Fikra AI",
+      brandLabel: "FIKRA AI"
+    }
+  },
+
   social: {
     links: {
       emailPrimary: "mailto:rawadnassar@fikra-ai.net",
@@ -692,7 +728,8 @@ export const content = {
       github: "https://github.com/AntonioRawad",
       fikraWebsite: "https://www.fikra-ai.net",
       fikraX: "https://x.com/Fikra_ai",
-      phone: "+972 52 962 4572"
+      phone: "+972 52 962 4572",
+      calendly: "https://calendly.com/rawadnassar-fikra-ai"
     },
     labels: {
       en: { linkedin: "Connect on LinkedIn", github: "View GitHub", fikra: "Visit Fikra AI", x: "Follow Fikra AI on X", email: "Email Antonio", book: "Book a strategic conversation" },
