@@ -18,18 +18,18 @@ export const content = {
   meta: {
     en: {
       htmlLang: "en", dir: "ltr",
-      title: "Antonio Rawad Nassar | C-Level Strategy & AI Transformation Advisor",
-      description: "Finance-grounded C-level advisor helping organizations convert complexity into structured decisions, AI-enabled workflows, and executable business systems."
+      title: "Antonio Rawad Nassar | CFO-Level Finance & AI Strategy Advisor",
+      description: "CFO-level finance and AI strategy advisor — FP&A, financial projections, AI strategy & automation, and AI training."
     },
     ar: {
       htmlLang: "ar", dir: "rtl",
-      title: "أنطونيو رواد نصار | مستشار استراتيجي وتحول بالذكاء الاصطناعي",
-      description: "مستشار إداري ومالي يساعد المؤسسات على تحويل التعقيد إلى قرارات منظمة، وسير عمل مدعوم بالذكاء الاصطناعي، وأنظمة قابلة للتنفيذ."
+      title: "أنطونيو رواد نصار | مستشار مالي بمستوى CFO واستراتيجية الذكاء الاصطناعي",
+      description: "مستشار مالي بمستوى CFO ومستشار استراتيجية الذكاء الاصطناعي — FP&A، توقعات مالية، استراتيجية الذكاء الاصطناعي والأتمتة، وتدريب الذكاء الاصطناعي."
     },
     he: {
       htmlLang: "he", dir: "rtl",
-      title: "אנטוניו רוואד נסאר | יועץ אסטרטגיה והובלת טרנספורמציה בבינה מלאכותית",
-      description: "יועץ אסטרטגי ופיננסי המסייע לארגונים להפוך מורכבות להחלטות מובנות, תהליכי עבודה מבוססי בינה מלאכותית ומערכות ביצועיות."
+      title: "אנטוניו רוואד נסאר | יועץ פיננסי ברמת CFO ואסטרטגיית בינה מלאכותית",
+      description: "יועץ פיננסי ברמת CFO ויועץ אסטרטגיית בינה מלאכותית — FP&A, תחזיות פיננסיות, אסטרטגיית AI ואוטומציה, והדרכת AI."
     }
   },
 
@@ -48,13 +48,13 @@ export const content = {
   hero: {
     en: {
       name: "Antonio Rawad Nassar",
-      eyebrow: "C-Level Strategy & AI Transformation Advisor",
+      eyebrow: "CFO-Level Finance & AI Strategy Advisor",
       h1Pre: "From complexity to ",
       h1Mid: "clarity",
       h1Bridge: " — from strategy to ",
       h1Tail: "executable AI-enabled systems",
       h1End: ".",
-      sub: "Antonio helps executives, founders, municipalities, education leaders, and transformation teams structure decisions, financial logic, AI workflows, and operating systems that turn ideas into action.",
+      sub: "FP&A · Financial Projections · AI Strategy & Automation · AI Training",
       ctaPrimary: "Book a strategic conversation",
       ctaSecondary: "View advisory areas",
       ctaTertiary: "Explore Fikra AI",
@@ -69,13 +69,13 @@ export const content = {
     },
     ar: {
       name: "أنطونيو رواد نصار",
-      eyebrow: "مستشار استراتيجية وتحوّل بالذكاء الاصطناعي للإدارة العليا",
+      eyebrow: "مستشار مالي بمستوى CFO واستراتيجية الذكاء الاصطناعي",
       h1Pre: "من التعقيد إلى ",
       h1Mid: "الوضوح",
       h1Bridge: " — ومن الاستراتيجية إلى ",
       h1Tail: "أنظمة قابلة للتنفيذ مدعومة بالذكاء الاصطناعي",
       h1End: ".",
-      sub: "يساعد أنطونيو المسؤولين التنفيذيين والمؤسسين والبلديات وقادة التعليم وفِرَق التحوّل على هيكلة القرارات والمنطق المالي وسير عمل الذكاء الاصطناعي وأنظمة التشغيل التي تحوّل الأفكار إلى أفعال.",
+      sub: "FP&A · التوقعات المالية · استراتيجية الذكاء الاصطناعي والأتمتة · تدريب الذكاء الاصطناعي",
       ctaPrimary: "احجز جلسة استراتيجية",
       ctaSecondary: "اطّلع على مجالات الاستشارة",
       ctaTertiary: "تعرّف على Fikra AI",
@@ -90,13 +90,13 @@ export const content = {
     },
     he: {
       name: "אנטוניו רוואד נסאר",
-      eyebrow: "יועץ אסטרטגיה והובלת טרנספורמציה בבינה מלאכותית ברמת הנהלה",
+      eyebrow: "יועץ פיננסי ברמת CFO ואסטרטגיית בינה מלאכותית",
       h1Pre: "ממורכבות ל",
       h1Mid: "בהירות",
       h1Bridge: " — מאסטרטגיה ל",
       h1Tail: "מערכות ביצועיות מבוססות בינה מלאכותית",
       h1End: ".",
-      sub: "אנטוניו מסייע למנהלים, מייסדים, רשויות מקומיות, מובילי חינוך וצוותי טרנספורמציה לבנות מבנה להחלטות, היגיון פיננסי, תהליכי עבודה של בינה מלאכותית ומערכות הפעלה שהופכות רעיונות לביצוע.",
+      sub: "FP&A · תחזיות פיננסיות · אסטרטגיית AI ואוטומציה · הדרכת AI",
       ctaPrimary: "קביעת שיחה אסטרטגית",
       ctaSecondary: "תחומי ייעוץ",
       ctaTertiary: "Fikra AI",
@@ -113,27 +113,27 @@ export const content = {
 
   trust: {
     en: [
-      { k: "Tenure", v: "25+ years" },
+      { k: "Built", v: "20+ AI automation agents" },
       { k: "Discipline", v: "Strategic Finance" },
       { k: "Capability", v: "AI Transformation" },
       { k: "Practice", v: "Business Architecture" },
-      { k: "Languages", v: "AR · EN · HE · IT" },
+      { k: "Languages", v: "Arabic (native) · Italian (native) · English (full professional) · Hebrew (good)" },
       { k: "Based", v: "Israel · International" }
     ],
     ar: [
-      { k: "الخبرة", v: "أكثر من 25 سنة" },
+      { k: "الإنجاز", v: "أكثر من 20 وكيل أتمتة بالذكاء الاصطناعي" },
       { k: "التخصص", v: "المالية الاستراتيجية" },
       { k: "الكفاءة", v: "التحول بالذكاء الاصطناعي" },
       { k: "الممارسة", v: "هندسة الأعمال" },
-      { k: "اللغات", v: "AR · EN · HE · IT" },
+      { k: "اللغات", v: "العربية (لغة أم) · الإيطالية (لغة أم) · الإنجليزية (مهنية كاملة) · العبرية (جيدة)" },
       { k: "المقر", v: "إسرائيل · دولي" }
     ],
     he: [
-      { k: "ותק", v: "25+ שנים" },
+      { k: "נבנו", v: "20+ סוכני אוטומציה מבוססי AI" },
       { k: "תחום", v: "פיננסים אסטרטגיים" },
       { k: "יכולת", v: "טרנספורמציה בבינה מלאכותית" },
       { k: "פרקטיקה", v: "ארכיטקטורה עסקית" },
-      { k: "שפות", v: "AR · EN · HE · IT" },
+      { k: "שפות", v: "ערבית (שפת אם) · איטלקית (שפת אם) · אנגלית (מקצועית מלאה) · עברית (טובה)" },
       { k: "מיקום", v: "ישראל · בינלאומי" }
     ]
   },
@@ -268,7 +268,7 @@ export const content = {
           outputs: "Modular learning path · workshops · workbooks · cohort projects.",
           value: "Converts AI curiosity into confident daily practice — measurable in actual deliverables.",
           tags: ["Curriculum", "AI Training"] },
-        { i: "03", name: "Axiom AI Productivity Programs", role: "AI Tutor · Productivity Coach",
+        { i: "03", name: "Axioma AI Productivity Programs", role: "AI Tutor · Productivity Coach",
           challenge: "Teams know AI exists; they don't know how to put it inside their week.",
           rolex: "1:1 and small-group tutoring focused on workflow embedding since January 2025.",
           outputs: "Personalized adoption plans · weekly artifacts · tool stacks per role.",
@@ -280,7 +280,7 @@ export const content = {
           outputs: "Completed application demonstrating delivery discipline and vibe-coding capability.",
           value: "Tangible proof that AI-assisted product work can ship, not just demo.",
           tags: ["Product", "Built & Shipped"] },
-        { i: "05", name: "AgriSolarCom · TriSolar · DualHarvest", role: "Acting MD · CFO-Level Advisor",
+        { i: "05", name: "AgriSolarCom · TriSolar · DualHarvest", role: "CFO-Level Strategic Advisor",
           challenge: "An agrivoltaic and renewable-energy ecosystem needs CFO-grade structure and investor narrative.",
           rolex: "Business modeling, pricing logic, investor-readiness materials, documentation, execution planning.",
           outputs: "Financial models · pricing frameworks · investor decks · execution roadmap.",
@@ -324,7 +324,7 @@ export const content = {
           outputs: "مسار تعلّم متعدّد الوحدات · ورش · كرّاسات · مشاريع جماعية.",
           value: "تحويل الفضول تجاه الذكاء الاصطناعي إلى ممارسة يومية قابلة للقياس بنتائج فعلية.",
           tags: ["مناهج", "تدريب AI"] },
-        { i: "03", name: "Axiom AI Productivity", role: "مدرّس ذكاء اصطناعي · مدرّب إنتاجية",
+        { i: "03", name: "Axioma AI Productivity", role: "مدرّس ذكاء اصطناعي · مدرّب إنتاجية",
           challenge: "تعلم الفِرَق بوجود الذكاء الاصطناعي لكنها لا تعرف كيف تدمجه في أسبوع العمل.",
           rolex: "جلسات فردية ومجموعات صغيرة تركّز على دمج سير العمل منذ يناير 2025.",
           outputs: "خطط تبنّي شخصية · نواتج أسبوعية · أدوات حسب الدور.",
@@ -336,7 +336,7 @@ export const content = {
           outputs: "تطبيق مكتمل يُظهر الانضباط في التسليم والقدرة على البناء بأسلوب Vibe Coding.",
           value: "دليل ملموس على أن العمل بمساعدة الذكاء الاصطناعي يُطلَق فعلاً لا يُعرض فقط.",
           tags: ["منتج", "تم الإطلاق"] },
-        { i: "05", name: "AgriSolarCom · TriSolar · DualHarvest", role: "مدير عام بالنيابة · مستشار بمستوى مدير مالي",
+        { i: "05", name: "AgriSolarCom · TriSolar · DualHarvest", role: "مستشار استراتيجي بمستوى مدير مالي",
           challenge: "تحتاج منظومة الطاقة المتجدّدة والزراعة الكهروضوئية إلى بنية بمستوى CFO وسردية للمستثمرين.",
           rolex: "نمذجة أعمال ومنطق تسعير ومواد جاهزية المستثمر وتوثيق وتخطيط تنفيذ.",
           outputs: "نماذج مالية · أُطر تسعير · عروض للمستثمرين · خارطة طريق للتنفيذ.",
@@ -380,7 +380,7 @@ export const content = {
           outputs: "מסלול מודולרי · סדנאות · חוברות עבודה · פרויקטים בקבוצה.",
           value: "סקרנות הופכת לפרקטיקה יומיומית — נמדדת בתוצרים אמיתיים.",
           tags: ["תכנית", "הדרכת AI"] },
-        { i: "03", name: "Axiom AI Productivity", role: "חונך · מאמן פרודוקטיביות",
+        { i: "03", name: "Axioma AI Productivity", role: "חונך · מאמן פרודוקטיביות",
           challenge: "צוותים יודעים שיש בינה מלאכותית, אבל לא איך לשלב אותה בשבוע העבודה.",
           rolex: "חונכות אישית וקבוצתית קטנה לשילוב בתוך תהליכים — מינואר 2025.",
           outputs: "תוכניות הטמעה אישיות · תוצרים שבועיים · סטאק לכל תפקיד.",
@@ -392,7 +392,7 @@ export const content = {
           outputs: "אפליקציה מוגמרת שמדגימה משמעת אספקה ויכולת vibe coding.",
           value: "הוכחה מוחשית שעבודה בעזרת AI יכולה להגיע למשתמש, לא רק לדמו.",
           tags: ["מוצר", "הושק"] },
-        { i: "05", name: "AgriSolarCom · TriSolar · DualHarvest", role: "מנכ\"ל בפועל · יועץ ברמת CFO",
+        { i: "05", name: "AgriSolarCom · TriSolar · DualHarvest", role: "יועץ אסטרטגי ברמת CFO",
           challenge: "אקוסיסטם אגריוולטאי ואנרגיה מתחדשת דורש מבנה ברמת CFO ונרטיב למשקיעים.",
           rolex: "מידול עסקי, היגיון תמחור, חומרי מוכנות למשקיעים, תיעוד ותכנון ביצוע.",
           outputs: "מודלים פיננסיים · מסגרות תמחור · מצגות למשקיעים · מפת דרכים.",
@@ -465,85 +465,85 @@ export const content = {
   timeline: {
     en: {
       kicker: "Experience",
-      title: "A 25-year arc across finance, advisory, AI, and product.",
-      lead: "From global asset management in Hong Kong and Sydney to founding an Arabic-first AI ecosystem — every step has fed the next.",
+      title: "An arc across finance, advisory, AI, and product.",
+      lead: "From finance and startup advisory to founding an Arabic-first AI ecosystem — every step has fed the next.",
       groups: [
         { label: "Current practice", items: [
-          { yr: "2023 — Present", title: "Independent C-Level Strategy, Finance & AI Transformation Advisor", org: "Israel · International", flag: "current" },
           { yr: "2025 — Present", title: "Founder & Product Architect", org: "Fikra AI / FMOS", flag: "current" },
-          { yr: "2025 — Present", title: "Curriculum Architect & AI Trainer", org: "Ship It 360 · 360 AI · Axiom AI Productivity", flag: "current" },
+          { yr: "2025 — Present", title: "Curriculum Architect & AI Trainer", org: "Ship It 360 · 360 AI · Axioma AI", flag: "current" },
+          { yr: "Jul 2024 — Present", title: "CFO-Level Strategic Advisor", org: "AgriSolarCom · TriSolar · DualHarvest", flag: "current" },
+          { yr: "2024 — Present", title: "AI · Notion · Municipal Productivity Training", org: "Israel", flag: "current" },
           { yr: "2024 — Present", title: "AI-Assisted Product, App & Technical Build Work", org: "Independent", flag: "current" },
-          { yr: "2024/2025 — Present", title: "Acting MD · CFO-Level Strategic Advisor", org: "AgriSolarCom · TriSolar · DualHarvest", flag: "current" },
           { yr: "2024 — 2025", title: "Startup Operations & Strategic Development Advisory", org: "Independent · Early-stage teams", flag: "" },
-          { yr: "2024 — Present", title: "AI · Notion · Municipal Productivity Training", org: "Israel", flag: "current" }
+          { yr: "2023 — Present", title: "Independent C-Level Strategy, Finance & AI Transformation Advisor", org: "Israel · International", flag: "current" }
         ]},
         { label: "Prior career", items: [
-          { yr: "2019 — 2022", title: "Advisor for Startups & Venture Capital", org: "Sprout Corporate Services, Singapore", flag: "" },
-          { yr: "2017", title: "Financial Analyst & Trainer", org: "Quadratti, Haifa", flag: "" },
-          { yr: "2013 — 2016", title: "Business Associate & Consultant", org: "Speedy Corporation, Singapore", flag: "" },
-          { yr: "2004 — 2015", title: "Global Asset Manager & Financial Planner", org: "Hong Kong · Sydney", flag: "" }
+          { yr: "2016 — 2022", title: "Startup Advisor & Mentor · Finance & Strategy (Freelance & In-House)", org: "Professional development: AI, Data Analytics, Data Science", flag: "" },
+          { yr: "2004 — 2015", title: "Financial Planner → Project Development Manager (Junior to Senior)", org: "International financial-services & project-development roles, multiple markets", flag: "" }
         ]},
         { label: "Education & credentials", items: [
-          { yr: "2007", title: "Postmaster in Monetary Policies & Central Banking", org: "University of Trento, Italy", flag: "edu" },
-          { yr: "2002", title: "M.A. in Finance & Monetary Policy", org: "University of Trento, Italy", flag: "edu" },
-          { yr: "Active", title: "AWS Certified Cloud Practitioner · FinOps Certified", org: "Statistical Modeling · Data Analytics · Descriptive Statistics", flag: "edu" },
-          { yr: "2009 (historical)", title: "FINRA Series 67 — historical reference only", org: "Presented as completed in 2009; not active unless independently confirmed", flag: "edu" }
+          { yr: "", title: "Postmaster in Monetary Policies & Central Banking", org: "University of Trento", flag: "edu" },
+          { yr: "", title: "M.A. in Finance & Monetary Policy", org: "University of Trento", flag: "edu" },
+          { yr: "2023", title: "AWS Certified Cloud Practitioner", org: "AWS", flag: "edu" },
+          { yr: "2023", title: "FinOps Certification", org: "FinOps", flag: "edu" },
+          { yr: "2023", title: "AWS re/Start Graduate", org: "600-hour program", flag: "edu" },
+          { yr: "2023", title: "Data Analytics Program", org: "Masterschool", flag: "edu" }
         ]}
       ]
     },
     ar: {
       kicker: "المسيرة المهنية",
-      title: "ربع قرن عبر المالية والاستشارات والذكاء الاصطناعي والمنتج.",
-      lead: "من إدارة الأصول العالمية في هونغ كونغ وسيدني إلى تأسيس منظومة ذكاء اصطناعي بالعربية أولاً — كل خطوة غذّت ما بعدها.",
+      title: "مسيرة عبر المالية والاستشارات والذكاء الاصطناعي والمنتج.",
+      lead: "من الاستشارات المالية واستشارات الشركات الناشئة إلى تأسيس منظومة ذكاء اصطناعي بالعربية أولاً — كل خطوة غذّت ما بعدها.",
       groups: [
         { label: "الممارسة الحالية", items: [
-          { yr: "2023 — حتى الآن", title: "مستشار مستقلّ في الاستراتيجية والمالية والتحوّل بالذكاء الاصطناعي", org: "إسرائيل · دولي", flag: "current" },
           { yr: "2025 — حتى الآن", title: "مؤسّس ومهندس منتج", org: "Fikra AI / FMOS", flag: "current" },
-          { yr: "2025 — حتى الآن", title: "مهندس مناهج ومدرّب AI", org: "Ship It 360 · 360 AI · Axiom", flag: "current" },
+          { yr: "2025 — حتى الآن", title: "مهندس مناهج ومدرّب AI", org: "Ship It 360 · 360 AI · Axioma AI", flag: "current" },
+          { yr: "يوليو 2024 — حتى الآن", title: "مستشار استراتيجي بمستوى CFO", org: "AgriSolarCom · TriSolar · DualHarvest", flag: "current" },
+          { yr: "2024 — حتى الآن", title: "تدريب AI و Notion والإنتاجية البلدية", org: "إسرائيل", flag: "current" },
           { yr: "2024 — حتى الآن", title: "تطوير منتجات وتطبيقات بمساعدة AI", org: "مستقلّ", flag: "current" },
-          { yr: "2024/2025 — حتى الآن", title: "مدير عام بالنيابة · مستشار بمستوى CFO", org: "AgriSolarCom · TriSolar · DualHarvest", flag: "current" },
           { yr: "2024 — 2025", title: "استشارة التطوير الاستراتيجي والتشغيلي للشركات الناشئة", org: "مستقلّ · فِرَق في مراحل مبكّرة", flag: "" },
-          { yr: "2024 — حتى الآن", title: "تدريب AI و Notion والإنتاجية البلدية", org: "إسرائيل", flag: "current" }
+          { yr: "2023 — حتى الآن", title: "مستشار مستقلّ في الاستراتيجية والمالية والتحوّل بالذكاء الاصطناعي", org: "إسرائيل · دولي", flag: "current" }
         ]},
         { label: "المسيرة السابقة", items: [
-          { yr: "2019 — 2022", title: "مستشار للشركات الناشئة ورأس المال المغامر", org: "Sprout Corporate Services، سنغافورة", flag: "" },
-          { yr: "2017", title: "محلّل مالي ومدرّب", org: "Quadratti، حيفا", flag: "" },
-          { yr: "2013 — 2016", title: "شريك أعمال ومستشار", org: "Speedy Corporation، سنغافورة", flag: "" },
-          { yr: "2004 — 2015", title: "مدير أصول عالمي ومخطّط مالي", org: "هونغ كونغ · سيدني", flag: "" }
+          { yr: "2016 — 2022", title: "مستشار ومرشد للشركات الناشئة · المالية والاستراتيجية (عمل حرّ وداخل الشركات)", org: "تطوير مهني: الذكاء الاصطناعي، تحليل البيانات، علم البيانات", flag: "" },
+          { yr: "2004 — 2015", title: "مخطّط مالي ← مدير تطوير مشاريع (من مبتدئ إلى أول)", org: "أدوار دولية في الخدمات المالية وتطوير المشاريع، في أسواق متعدّدة", flag: "" }
         ]},
         { label: "التعليم والشهادات", items: [
-          { yr: "2007", title: "ماجستير ما بعد التخرّج في السياسات النقدية والبنوك المركزية", org: "جامعة ترِنتو، إيطاليا", flag: "edu" },
-          { yr: "2002", title: "ماجستير في المالية والسياسة النقدية", org: "جامعة ترِنتو، إيطاليا", flag: "edu" },
-          { yr: "ساري", title: "AWS Certified Cloud Practitioner · FinOps Certified", org: "نمذجة إحصائية · تحليلات بيانات · إحصاء وصفي", flag: "edu" },
-          { yr: "2009 (مرجعي)", title: "FINRA Series 67 — مرجع تاريخي فقط", org: "أُكمل عام 2009؛ غير ساري ما لم يُؤكَّد ذلك باستقلال", flag: "edu" }
+          { yr: "", title: "ماجستير ما بعد التخرّج في السياسات النقدية والبنوك المركزية", org: "جامعة ترِنتو", flag: "edu" },
+          { yr: "", title: "ماجستير في المالية والسياسة النقدية", org: "جامعة ترِنتو", flag: "edu" },
+          { yr: "2023", title: "AWS Certified Cloud Practitioner", org: "AWS", flag: "edu" },
+          { yr: "2023", title: "شهادة FinOps", org: "FinOps", flag: "edu" },
+          { yr: "2023", title: "خرّيج برنامج AWS re/Start", org: "برنامج من 600 ساعة", flag: "edu" },
+          { yr: "2023", title: "برنامج تحليل البيانات", org: "Masterschool", flag: "edu" }
         ]}
       ]
     },
     he: {
       kicker: "ניסיון",
-      title: "קשת של 25 שנה — פיננסים, ייעוץ, בינה מלאכותית ומוצר.",
-      lead: "מניהול נכסים גלובלי בהונג קונג וסידני ועד הקמת אקוסיסטם בינה מלאכותית בערבית — כל שלב הזין את הבא.",
+      title: "קשת של פיננסים, ייעוץ, בינה מלאכותית ומוצר.",
+      lead: "מייעוץ פיננסי ולסטארטאפים ועד הקמת אקוסיסטם בינה מלאכותית בערבית — כל שלב הזין את הבא.",
       groups: [
         { label: "פעילות נוכחית", items: [
-          { yr: "2023 — היום", title: "יועץ עצמאי לאסטרטגיה, פיננסים וטרנספורמציה בבינה מלאכותית", org: "ישראל · בינלאומי", flag: "current" },
           { yr: "2025 — היום", title: "מייסד וארכיטקט מוצר", org: "Fikra AI / FMOS", flag: "current" },
-          { yr: "2025 — היום", title: "ארכיטקט תכנית ומדריך AI", org: "Ship It 360 · 360 AI · Axiom", flag: "current" },
+          { yr: "2025 — היום", title: "ארכיטקט תכנית ומדריך AI", org: "Ship It 360 · 360 AI · Axioma AI", flag: "current" },
+          { yr: "יולי 2024 — היום", title: "יועץ אסטרטגי ברמת CFO", org: "AgriSolarCom · TriSolar · DualHarvest", flag: "current" },
+          { yr: "2024 — היום", title: "הדרכת AI · Notion · רשויות מקומיות", org: "ישראל", flag: "current" },
           { yr: "2024 — היום", title: "בנייה טכנית בעזרת AI", org: "עצמאי", flag: "current" },
-          { yr: "2024/2025 — היום", title: "מנכ\"ל בפועל · יועץ ברמת CFO", org: "AgriSolarCom · TriSolar · DualHarvest", flag: "current" },
           { yr: "2024 — 2025", title: "ייעוץ פיתוח אסטרטגי ותפעולי לסטארטאפים", org: "עצמאי · צוותים בשלב מוקדם", flag: "" },
-          { yr: "2024 — היום", title: "הדרכת AI · Notion · רשויות מקומיות", org: "ישראל", flag: "current" }
+          { yr: "2023 — היום", title: "יועץ עצמאי לאסטרטגיה, פיננסים וטרנספורמציה בבינה מלאכותית", org: "ישראל · בינלאומי", flag: "current" }
         ]},
         { label: "קריירה קודמת", items: [
-          { yr: "2019 — 2022", title: "יועץ לסטארטאפים והון סיכון", org: "Sprout Corporate Services, סינגפור", flag: "" },
-          { yr: "2017", title: "אנליסט פיננסי ומדריך", org: "Quadratti, חיפה", flag: "" },
-          { yr: "2013 — 2016", title: "שותף עסקי ויועץ", org: "Speedy Corporation, סינגפור", flag: "" },
-          { yr: "2004 — 2015", title: "מנהל נכסים גלובלי ומתכנן פיננסי", org: "הונג קונג · סידני", flag: "" }
+          { yr: "2016 — 2022", title: "יועץ ומנטור לסטארטאפים · פיננסים ואסטרטגיה (פרילנס ובתוך הארגון)", org: "פיתוח מקצועי: AI, ניתוח נתונים, מדעי הנתונים", flag: "" },
+          { yr: "2004 — 2015", title: "מתכנן פיננסי ← מנהל פיתוח פרויקטים (מזוטר לבכיר)", org: "תפקידים בינלאומיים בשירותים פיננסיים ובפיתוח פרויקטים, במגוון שווקים", flag: "" }
         ]},
         { label: "השכלה והסמכות", items: [
-          { yr: "2007", title: "פוסט-מאסטר במדיניות מוניטרית ובנקאות מרכזית", org: "אוניברסיטת טרנטו, איטליה", flag: "edu" },
-          { yr: "2002", title: "M.A. בפיננסים ומדיניות מוניטרית", org: "אוניברסיטת טרנטו, איטליה", flag: "edu" },
-          { yr: "תקף", title: "AWS Certified Cloud Practitioner · FinOps Certified", org: "מידול סטטיסטי · ניתוח נתונים · סטטיסטיקה תיאורית", flag: "edu" },
-          { yr: "2009 (היסטורי)", title: "FINRA Series 67 — אזכור היסטורי בלבד", org: "הוצג כהושלם ב-2009; אינו פעיל ללא אישור עצמאי", flag: "edu" }
+          { yr: "", title: "פוסט-מאסטר במדיניות מוניטרית ובנקאות מרכזית", org: "אוניברסיטת טרנטו", flag: "edu" },
+          { yr: "", title: "M.A. בפיננסים ומדיניות מוניטרית", org: "אוניברסיטת טרנטו", flag: "edu" },
+          { yr: "2023", title: "AWS Certified Cloud Practitioner", org: "AWS", flag: "edu" },
+          { yr: "2023", title: "הסמכת FinOps", org: "FinOps", flag: "edu" },
+          { yr: "2023", title: "בוגר AWS re/Start", org: "תכנית של 600 שעות", flag: "edu" },
+          { yr: "2023", title: "תכנית ניתוח נתונים", org: "Masterschool", flag: "edu" }
         ]}
       ]
     }

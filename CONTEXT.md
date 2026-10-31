@@ -41,7 +41,6 @@ src/
 public/
   fonts/           # Cairo*.ttf, JetBrainsMono-VariableFont_wght.ttf
   assets/          # antonio-portrait.png
-  cv/              # Antonio-Rawad-Nassar.pdf  (not currently linked from the UI)
 design-handoff/    # original Claude Design prototype + source biography docx — REFERENCE ONLY, not built
 ```
 
@@ -59,7 +58,7 @@ design-handoff/    # original Claude Design prototype + source biography docx �
   narrative" content was deliberately removed everywhere and replaced with **"Startup Operations &
   Strategic Development"** (market entry & penetration, operating models, risk management,
   investor-readiness, execution roadmaps). Do not reintroduce any of it. (The `AgriSolarCom ·
-  TriSolar · DualHarvest` renewable/agrivoltaic project — Acting MD · CFO-level — is legitimate and
+  TriSolar · DualHarvest` renewable/agrivoltaic project — CFO-Level Strategic Advisor — is legitimate and
   stays; only the ESG-advisory lane was removed.)
 - Keep the trilingual + RTL discipline: when you touch text or layout, update `en`/`ar`/`he` and use
   logical CSS properties (`inset-inline-*`, `margin-inline-*`, `:dir()`/`html[dir="rtl"]`).

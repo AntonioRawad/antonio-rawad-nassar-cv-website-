@@ -57,6 +57,5 @@ src/
 public/
   fonts/             # Cairo + JetBrains Mono (.ttf)
   assets/            # antonio-portrait.png
-  cv/                # Antonio-Rawad-Nassar.pdf
 design-handoff/      # original Claude Design prototype (reference only — not built)
 ```

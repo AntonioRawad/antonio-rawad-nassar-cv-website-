@@ -409,20 +409,20 @@ function HeroIdentityPanel({ lang }: { lang: Lang }) {
   const m = {
     en: {
       eyebrow: "Executive Profile",
-      title: "C-Level Strategy & AI Transformation Advisor",
-      meta: ["25+ years", "Israel", "International"],
+      title: "CFO-Level Finance & AI Strategy Advisor",
+      meta: ["20+ AI automation agents built", "Israel", "International"],
       langs: ["AR", "EN", "HE", "IT"],
     },
     ar: {
       eyebrow: "الملف التنفيذي",
-      title: "مستشار استراتيجية تنفيذية وتحوّل بالذكاء الاصطناعي",
-      meta: ["+25 سنة", "إسرائيل", "دولي"],
+      title: "مستشار مالي بمستوى CFO واستراتيجية الذكاء الاصطناعي",
+      meta: ["+20 وكيل أتمتة AI", "إسرائيل", "دولي"],
       langs: ["AR", "EN", "HE", "IT"],
     },
     he: {
       eyebrow: "פרופיל מנהלים",
-      title: "יועץ אסטרטגיה והובלת טרנספורמציה בבינה מלאכותית ברמת הנהלה",
-      meta: ["+25 שנים", "ישראל", "בינלאומי"],
+      title: "יועץ פיננסי ברמת CFO ואסטרטגיית בינה מלאכותית",
+      meta: ["+20 סוכני אוטומציה AI", "ישראל", "בינלאומי"],
       langs: ["AR", "EN", "HE", "IT"],
     },
   }[lang];
@@ -432,7 +432,7 @@ function HeroIdentityPanel({ lang }: { lang: Lang }) {
       <div className="hero-identity__photo">
         <Image
           src="/assets/antonio-portrait.png"
-          alt="Antonio Rawad Nassar — C-Level Strategy & AI Transformation Advisor"
+          alt="Antonio Rawad Nassar — CFO-Level Finance & AI Strategy Advisor"
           width={480}
           height={480}
           priority
@@ -452,7 +452,7 @@ function HeroIdentityPanel({ lang }: { lang: Lang }) {
             <span key={i}>{x}</span>
           ))}
         </div>
-        <div className="hero-identity__langs" aria-label="Languages: Arabic, English, Hebrew, Italian">
+        <div className="hero-identity__langs" aria-label="Languages: Arabic (native), Italian (native), English (full professional), Hebrew (good)">
           {m.langs.map((x, i) => (
             <b key={i}>{x}</b>
           ))}
